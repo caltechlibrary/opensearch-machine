@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Newt -- README</title>
+    <link rel="stylesheet" href="https://caltechlibrary.github.io/css/site.css">
+    <base href="./">
+</head>
+<body>
+<header>
+<a href="https://library.caltech.edu"><img src="https://caltechlibrary.github.io/assets/liblogo.gif" alt="Caltech Library logo"></a>
+</header>
+<nav>
+<ul>
+	<li><a href="/">Home</a></li>
+	<li><a href="./">README</a></li>
+	<li><a href="user_manual.html">User Manual</a></li>
+	<li><a href="LICENSE">LICENSE</a></li>
+	<li><a href="INSTALL.html">INSTALL</a></li>
+	<li><a href="about.html">About</a></li>
+	<li><a href="search.html">Search</a></li>
+	<li><a href="https://github.com/caltechlibrary/newt">GitHub</a></li>
+</ul>
+</nav>
+
+<section>
+<h1 id="opensearch-machine">Opensearch Machine</h1>
+<p>This repository contains instructions for setting up a <a
+href="https://multipass.run">Multipass</a> managed virtual machine for
+learning and experimentation Opensearch. Multipass runs on macOS,
+Windows and Linux. It provides an Ubuntu Linux machine. Opensearch while
+written in Java is tailored to run under a Linux environment. Opensearch
+is a full text search engine based on a forked implementation of
+Elasticsearch full text search engine. Opensearch is the search engine
+used in Invenio-RDM.</p>
+<p><a
+href="https://github.com/caltechlibrary/opensearch-machine/blob/main/LICENSE"><img
+src="https://img.shields.io/badge/License-BSD--like-lightgrey"
+alt="License" /></a> <a
+href="https://github.com/caltechlibrary/opensearch-machine/releases"><img
+src="https://img.shields.io/github/v/release/caltechlibrary/opensearch-machine.svg?color=b44e88"
+alt="Latest release" /></a>
+<!-- [![DOI](https://img.shields.io/badge/dynamic/json.svg?label=DOI&style=flat-square&colorA=gray&colorB=navy&query=$.pids.doi.identifier&uri=https://data.caltech.edu/api/records/1n20b-6y141/versions/latest)](https://data.caltech.edu/records/1n20b-6y141/latest) --></p>
+<h2 id="table-of-contents">Table of contents</h2>
+<ul>
+<li><a href="#introduction">Introduction</a></li>
+<li>Installation/<a href="#quick-start">Quick start</a></li>
+<li><a href="#usage">Usage</a></li>
+<li><a href="#known-issues-and-limitations">Known issues and
+limitations</a></li>
+<li><a href="#getting-help">Getting help</a></li>
+<li><a href="#contributing">Contributing</a></li>
+<li><a href="#license">License</a></li>
+<li><a href="#acknowledgments">Acknowledgments</a></li>
+</ul>
+<h2 id="introduction">Introduction</h2>
+<p>This repository is focused on creating a Multipass virtual machine
+for learning and exploring Opensearch. It includes brief instructions
+for installation of Opensearch and Opensearch Dashboard running under a
+Multipass managed virtual machine. It includes documentation describing
+how to create a indexes, index aliases and backing up those indexes
+outside the virtual machine.</p>
+<h2 id="quick-start">Quick start</h2>
+<p>Use the <a href="newt-init.yaml">newt-init.yaml</a> file to create a
+Multipass managed virtual machine. Then run the numbered scripts found
+in <code>/usr/local/sbin</code> to complete the installation
+process.</p>
+<h3 id="creating-launching-the-virtual-machine-with-multipass">Creating
+(Launching) the virtual machine with Multipass</h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">multipass</span> launch <span class="at">--name</span> opensearch-machine</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>          <span class="ex">--disk</span> 50G <span class="dt">\</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">--memory</span> 2G <span class="dt">\</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">--name</span> newstack <span class="dt">\</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">--cloud-init</span> newt-init.yaml</span></code></pre></div>
+<h3 id="working-in-your-virtual-machine">Working in your virtual
+machine</h3>
+<div class="sourceCode" id="cb2"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">multipass</span> shell opensearch-machine</span></code></pre></div>
+<h3 id="setting-finishing-the-search">Setting finishing the search</h3>
+<p>While in the shell of your virtual machine (you are the “ubuntu”
+user) run the following scripts.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">/usr/local/sbin/01-add-python-packages.bash</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">/usr/local/sbin/06-add-opensearch.bash</span></span></code></pre></div>
+<h2 id="usage">Usage</h2>
+<p>Once you have your virtual machine up and running with Opensearch and
+the Opensearch dashboard you should be able to access it from your host
+machine using SSH port mapping to interact with the Opensearch REST API
+and the Opensearch dashboard.</p>
+<h2 id="known-issues-and-limitations">Known issues and limitations</h2>
+<p>These instructions focus on running Opensearch for the purpose of
+learning and experimentation. It does not cover setup and configuration
+of running Opensearch in a production environment. There are many
+additional considerations in that setting. Consult the <a
+href="https://opensearch.org">Opensearch</a> website and your system
+administrator(s) to explore those issues.</p>
+<h2 id="getting-help">Getting help</h2>
+<p>If you can questions, problems or suggestions regarding this
+repository software and documentation please file a GitHub <a
+href="https://github.com/caltechlibrary/opensearch-machine/issues">issue</a>.</p>
+<h2 id="license">License</h2>
+<p>Software produced by the Caltech Library is Copyright © 2024
+California Institute of Technology. This software is freely distributed
+under a modified BSD 3-clause license. Please see the <a
+href="LICENSE">LICENSE</a> file for more information.</p>
+<h2 id="acknowledgments">Acknowledgments</h2>
+<p>I’d like to thank the <a
+href="https://caltechlibary.github.io">Caltech Library Digital
+Library</a> development group for their inspiration and support in this
+project.</p>
+<p>This work was funded by the California Institute of Technology
+Library.</p>
+<div data-align="center">
+<p><br> <a href="https://www.caltech.edu">
+<img width="100" height="100" alt="Caltech logo" src="https://raw.githubusercontent.com/caltechlibrary/template/main/.graphics/caltech-round.png">
+</a></p>
+</div>
+</section>
+
+<footer>
+<span><h1><A href="http://caltech.edu">Caltech</a></h1></span>
+<span>&copy; 2023-2024 <a href="https://www.library.caltech.edu/copyright">Caltech library</a></span>
+<address>1200 E California Blvd, Mail Code 1-32, Pasadena, CA 91125-3200</address> 
+<span>Phone: <a href="tel:+1-626-395-3405">(626)395-3405</a></span>
+<span><a href="mailto:library@caltech.edu">Email Us</a></span>
+<a class="cl-hide" href="sitemap.xml">Site Map</a>
+</footer>
+</body>
+</html>

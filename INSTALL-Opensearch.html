@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Newt -- INSTALL-Opensearch</title>
+    <link rel="stylesheet" href="https://caltechlibrary.github.io/css/site.css">
+    <base href="./">
+</head>
+<body>
+<header>
+<a href="https://library.caltech.edu"><img src="https://caltechlibrary.github.io/assets/liblogo.gif" alt="Caltech Library logo"></a>
+</header>
+<nav>
+<ul>
+	<li><a href="/">Home</a></li>
+	<li><a href="./">README</a></li>
+	<li><a href="user_manual.html">User Manual</a></li>
+	<li><a href="LICENSE">LICENSE</a></li>
+	<li><a href="INSTALL.html">INSTALL</a></li>
+	<li><a href="about.html">About</a></li>
+	<li><a href="search.html">Search</a></li>
+	<li><a href="https://github.com/caltechlibrary/newt">GitHub</a></li>
+</ul>
+</nav>
+
+<section>
+<h1 id="opensearch-v7.x">Opensearch v7.x</h1>
+<p>You can go to <a
+href="https://opensearch.org/downloads.html">Opensearch website</a> and
+download the appropriate Opensearch program. The v2.x releases are the
+current ones as of February 2024. While Opensearch is written in Java
+and should run on systems that support Java the “proc” file system is
+used in some of it’s components so it is happiest running under Linux.
+These instructions presume running under Ubuntu/Debian Linux and will
+focus on that. <a href="https://multipass.run">Multipass</a> runs on
+macOS, Windows 11 and Linux. Multipass will provided you with an Ubuntu
+virtual machine that closely matches what we use in production on AWS as
+well is that operating systems we use on physical machines in our server
+room.</p>
+<p>On the Opensearch downloads page under the Linux Platform select box
+you can pick the CPU type and “Deb” releases. This is what will be used
+in the cloud-init file provided in this repository.</p>
+<p>This repository includes a copy of <a
+href="newt-init.yaml">newt-init.yaml</a> from our <a
+href="https://github.com/caltechlibrary/cloud-init-examples">cloud-init-examples</a>
+repository. This version of <code>newt-init.yaml</code> is tuned to
+support Opensearch and also provides the full “Newt” setup as that is an
+easy way to generate applications for experimenting with Opensearch.</p>
+<p>These instructions do not supersede the documentation on
+Opensearch.org at <a
+href="https://opensearch.org/docs/latest/install-and-configure/install-opensearch/debian/"
+class="uri">https://opensearch.org/docs/latest/install-and-configure/install-opensearch/debian/</a>
+and <a
+href="https://opensearch.org/docs/latest/install-and-configure/install-dashboards/debian/"
+class="uri">https://opensearch.org/docs/latest/install-and-configure/install-dashboards/debian/</a>.</p>
+<p>Opensearch runs a REST API on the default port 9200 of localhost
+(e.g. <a href="http://localhost:9200/"
+class="uri">http://localhost:9200/</a>) in the virtual machine.
+Opensearch Dashboard runs on port 5601 of localhost (e.g. <a
+href="http://localhost:5601" class="uri">http://localhost:5601</a>) in
+the virtual machine.</p>
+<h2 id="managing-opensearch-on-debianubuntu">Managing Opensearch on
+Debian/Ubuntu</h2>
+<p>Opensearch is setup up for <code>systemd</code>. Below are common
+<code>systemctl</code> commands for working with the Opensearch
+service.</p>
+<p>If you want manual restart just do <code>daemon-reload</code>, then
+use the usual <code>systemctl</code> start and stop verbs with
+<code>opensearch.service</code>.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl daemon-reload</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl enable opensearch.service</span></code></pre></div>
+<p>Checking to see if Opensearch is running.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl status opensearch.service</span></code></pre></div>
+<p>Starting Opensearch</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl start opensearch.service</span></code></pre></div>
+<p>Stopping Opensearch</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl stop opensearch.service</span></code></pre></div>
+<p>To remove Opensearch from auto start use the usually systemd
+disable.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl disable opensearch.service</span></code></pre></div>
+</section>
+
+<footer>
+<span><h1><A href="http://caltech.edu">Caltech</a></h1></span>
+<span>&copy; 2023-2024 <a href="https://www.library.caltech.edu/copyright">Caltech library</a></span>
+<address>1200 E California Blvd, Mail Code 1-32, Pasadena, CA 91125-3200</address> 
+<span>Phone: <a href="tel:+1-626-395-3405">(626)395-3405</a></span>
+<span><a href="mailto:library@caltech.edu">Email Us</a></span>
+<a class="cl-hide" href="sitemap.xml">Site Map</a>
+</footer>
+</body>
+</html>
