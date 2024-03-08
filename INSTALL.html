@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Opensearch Machine</title>
+    <link rel="stylesheet" href="https://caltechlibrary.github.io/css/site.css">
+    <base href="./">
+</head>
+<body>
+<header>
+<a href="https://library.caltech.edu"><img src="https://caltechlibrary.github.io/assets/liblogo.gif" alt="Caltech Library logo"></a>
+</header>
+<nav>
+<ul>
+	<li><a href="/">Home</a></li>
+	<li><a href="./">README</a></li>
+	<li><a href="user_manual.html">User Manual</a></li>
+	<li><a href="LICENSE">LICENSE</a></li>
+	<li><a href="INSTALL.html">INSTALL</a></li>
+	<li><a href="about.html">About</a></li>
+	<li><a href="search.html">Search</a></li>
+	<li><a href="https://github.com/caltechlibrary/newt">GitHub</a></li>
+</ul>
+</nav>
+
+<section>
+<h1 id="installation-and-setup-of-this-repository">Installation and
+setup of this repository</h1>
+<p>This repository is designed to provide an easy setup of Opensearch
+using Multipass and cloud init files.</p>
+<p>The following are required to run the examples documented here.</p>
+<ul>
+<li>Bash 3.2 or better</li>
+<li>Multipass 1.13 or better</li>
+</ul>
+<p>To build the website, prepare documentation and maintain the
+repository you need the following available.</p>
+<ul>
+<li>Git 2.3 or better</li>
+<li>GNU Make 3.8 or better</li>
+<li>Pandoc 3.1 or better</li>
+<li>PageFind 1.0.4 or better (used to provide static site search)</li>
+<li>Python 3.x or better (provides an easy way to run a “localhost” web
+server)</li>
+<li>A web browser (e.g. Firefox)</li>
+<li>A plain text editor (e..g VS Code, vi, emacs, nano, micro)</li>
+</ul>
+<h2 id="steps-to-improve-repository-contents">Steps to improve
+repository contents</h2>
+<ol type="1">
+<li>Clone this repository and change into repository directory</li>
+<li>Verify that the software is available to rebuild the website</li>
+<li>Re-build the website using <code>make website</code></li>
+<li>Start up a localhost web service</li>
+<li>Check with a web browser to see how it looks</li>
+</ol>
+<p>Here’s the command I run to get things going.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> <span class="at">--version</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Make sure I have a recent git available.</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/caltechlibrary/opensearch-machine</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> opensearch-machine</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> check_software</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> website</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">-m</span> http.server</span></code></pre></div>
+<p>At this point I can point my web browser at <a
+href="http://localhost:8000" class="uri">http://localhost:8000</a> and
+see the website.</p>
+</section>
+
+<footer>
+<span><h1><A href="http://caltech.edu">Caltech</a></h1></span>
+<span>&copy; 2023-2024 <a href="https://www.library.caltech.edu/copyright">Caltech library</a></span>
+<address>1200 E California Blvd, Mail Code 1-32, Pasadena, CA 91125-3200</address> 
+<span>Phone: <a href="tel:+1-626-395-3405">(626)395-3405</a></span>
+<span><a href="mailto:library@caltech.edu">Email Us</a></span>
+<a class="cl-hide" href="sitemap.xml">Site Map</a>
+</footer>
+</body>
+</html>

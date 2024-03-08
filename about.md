@@ -37,3 +37,11 @@ A Multipass virtual machine setup for learning and exploring Opensearch
 
 
 
+### Software Requirements
+
+- GNU Make &gt;=3.8
+- Pandoc &gt;= 3.1
+- PageFind &gt;= 1.0.4
+- Bash &gt;= 3.2
+- Python &gt;= 3
+- Multipass &gt;= 1.13

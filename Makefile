@@ -69,6 +69,9 @@ website: clean-website presentations .FORCE
 hash: .FORCE
 	git log --pretty=format:'%h' -n 1
 
+check_software: .FORCE
+	bash check_software.bash
+
 check: .FORCE
 	shellcheck opensearch-machine.bash
 	for FNAME in $(shell ls -1 *.md); do aspell -c $$FNAME; done

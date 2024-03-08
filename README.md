@@ -30,10 +30,7 @@ Use the [opensearch-init.yaml](opensearch-init.yaml) file to create a Multipass 
 ### Creating (Launching) the virtual machine with Multipass
 
 ```sh
-multipass launch --name opensearch-machine
-          --disk 50G \
-          --memory 2G \
-          --cloud-init opensearch-init.yaml
+bash opensearch-machine.bash
 ```
 
 ### Working in your virtual machine
@@ -47,15 +44,25 @@ multipass shell opensearch-machine
 While in the shell of your virtual machine (you are the "ubuntu" user) run the following scripts.
 
 ```sh
-/usr/local/sbin/01-add-python-packages.bash
-/usr/local/sbin/06-add-opensearch.bash
+01-setup-scripts.bash
+07-add-opensearch.bash
 ```
 
 At this point you should have Opensearch and opensearch Dashboard running in your virtual machine, ready to explore.
 
+## Stopping and removing your virtual machine
+
+```sh
+multipass stop opensearch-machine
+multipass delete opensearch-machine
+multipass purge
+```
+
 ## Usage
 
 Once you have your virtual machine up and running with Opensearch and the Opensearch dashboard you should be able to access it from your host machine using SSH port mapping to interact with the Opensearch REST API and the Opensearch dashboard.
+
+You can find out more about using Multipass to manage virtual machines at <https://multipass.run>. You can find out more about Opensearch and Opensearch Dashboard at <https://opensearch.org/docs/latest/about/>
 
 ## Known issues and limitations
 

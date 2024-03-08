@@ -89,6 +89,7 @@ echo "Creating ${VM_NAME} using ${CLOUD_INIT}"
 multipass launch -v --name "${VM_NAME}" \
           --disk 50G \
           --memory 2G \
+		  --cpus 2 \
           --cloud-init "${CLOUD_INIT}"
 multipass info "${VM_NAME}"
 cat <<EOT

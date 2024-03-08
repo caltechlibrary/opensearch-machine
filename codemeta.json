@@ -47,5 +47,13 @@
 	"search engine",
 	"virtual machine"
   ],
-  "developmentStatus": "concept"
+  "developmentStatus": "concept",
+  "softwareRequirements": [
+    "GNU Make >=3.8",
+	"Pandoc >= 3.1",
+	"PageFind >= 1.0.4",
+    "Bash >= 3.2",
+	"Python >= 3",
+    "Multipass >= 1.13"
+  ]
 }

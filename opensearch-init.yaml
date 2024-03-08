@@ -38,7 +38,7 @@
 # to install Haskell (GHCup) so you can compile the latest Pandoc and PostgREST
 # and Opensearch/Opensearch Dashboard.
 #
-# 1. 01-setup-scripts.bash, create "$HOME/sbin" and adds it to your .bashrc
+# 1. 01-setup-scripts.bash, creates "$HOME/bin" and "$HOME/sbin" and adds things ito your .bashrc
 # 2. 02-add-python-packages.bash, adds commonly used Python packages to the system
 # 3. 03-add-go-and-caltechlibrary-tools.bash, builds and install DLD Go based tools
 # 4. 04-ghcup-install.bash, installs Haskell toolchain and manager
@@ -60,7 +60,7 @@ write_files:
       any software to pickup the environment changes defined in it.
 
           source $HOME/.bashrc
-    path: README.1st
+    path: /home/ubuntu/README.1st
     owner: ubuntu:ubuntu
     permissions: '0664'
   - content: |
@@ -77,8 +77,8 @@ write_files:
               source $HOME/.bashrc
       
       EOT
-    path: /home/ubuntu/sbin/01-setup-scripts.bash
-    owner: ubuntu:ubuntu
+    path: /usr/local/sbin/01-setup-scripts.bash
+    owner: root:root
     permissions: '0775'
   - content: |
       #!/bin/bash
@@ -89,8 +89,8 @@ write_files:
       python3 -m pip install pybtex
       python3 -m pip install feedgen
       python3 -m pip install python-dateutil
-    path: /home/ubuntu/sbin/02-add-python-packages.bash
-    owner: ubuntu:ubuntu
+    path: /usr/local/sbin/02-add-python-packages.bash
+    owner: root:root
     permissions: '0775'
   - content: |
       #!/bin/bash
@@ -108,14 +108,14 @@ write_files:
         cd "${HOME}/src/github.com/caltechlibrary"
       done
       cd 
-    path: /home/ubuntu/sbin/03-add-go-and-caltechlibrary-tools.bash
-    owner: ubuntu:ubuntu
+    path: /usr/local/sbin/03-add-go-and-caltechlibrary-tools.bash
+    owner: root:root
     permissions: '0775'
   - content: |
       #!/bin/bash
       curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org | sh
-    path: /home/ubuntu/sbin/04-ghcup-install.bash
-    owner: ubuntu:ubuntu
+    path: /usr/local/sbin/04-ghcup-install.bash
+    owner: root:root
     permissions: '0775'
   - content: |
       #!/bin/bash
@@ -127,8 +127,8 @@ write_files:
       make
       cp -v $(find . -type f -name pandoc) "${HOME}/bin"
       cp -v $(find . -type f -name pandoc) "${HOME}/bin/pandoc-server"
-    path: /home/ubuntu/sbin/05-pandoc-build.bash
-    owner: ubuntu:ubuntu
+    path: /usr/local/sbin/05-pandoc-build.bash
+    owner: root:root
     permissions: '0775'
   - content: |
       #!/bin/bash
@@ -137,8 +137,8 @@ write_files:
       cd src/postgres 
       stack build --install-ghc --copy-bins --local-bin-path $HOME/bin
       cd
-    path: /home/ubuntu/sbin/06-postgrest-build.bash
-    owner: ubuntu:ubuntu
+    path: /usr/local/sbin/06-postgrest-build.bash
+    owner: root:root
     permissions: '0775'
   - content: |
       #!/bin/bash
@@ -157,8 +157,8 @@ write_files:
          echo "Unsupport CPU ${CPU} see <https://opensearch.org/downloads.html>"
          ;;
       esac
-    path: /home/ubuntu/sbin/07-add-opensearch.bash
-    owner: ubuntu:ubuntu
+    path: /usr/local/sbin/07-add-opensearch.bash
+    owner: root:root
     permissions: '0775'
 package_upgrade: true
 # Install additional packages on first boot
