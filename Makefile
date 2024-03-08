@@ -35,7 +35,7 @@ endif
 
 DIST_FOLDERS = bin/*
 
-build: man CITATION.cff about.md website
+build: CITATION.cff about.md opensearch-machine.1.md man website
 
 man: $(MAN_PAGES)
 
@@ -52,6 +52,10 @@ about.md: .FORCE
 	@echo "" | pandoc --metadata-file=_codemeta.json --template codemeta-about.tmpl >about.md 2>/dev/null;
 	@if [ -f _codemeta.json ]; then rm _codemeta.json; fi
 
+opensearch-machine.1.md: opensearch-machine.bash
+	bash opensearch-machine.bash help >opensearch-machine.1.md
+	git add opensearch-machine.1.md
+
 presentations: .FORCE
 	- make -f presentation.mak
 
@@ -66,6 +70,7 @@ hash: .FORCE
 	git log --pretty=format:'%h' -n 1
 
 check: .FORCE
+	shellcheck opensearch-machine.bash
 	for FNAME in $(shell ls -1 *.md); do aspell -c $$FNAME; done
 
 test: clean build

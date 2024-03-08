@@ -97,7 +97,7 @@ url: "https://caltechlibrary.github.io/opensearch-machine/blob/main/presentation
 
 # About
 
-- Caltech Library Digitial Library Development Group
+- Caltech Library Digital Library Development Group
 - <https://caltechlibrary.github.io/opensearch-machine>
 - <https://github.com/caltechlibrary/opensearch-machine>
 - Issues <https://github.com/caltechlibrary/opensearch-machine/issues>

@@ -4,7 +4,7 @@ You can go to [Opensearch website](https://opensearch.org/downloads.html) and do
 
 On the Opensearch downloads page under the Linux Platform select box you can pick the CPU type and "Deb" releases. This is what will be used in the cloud-init file provided in this repository.
 
-This repository includes a copy of [newt-init.yaml](newt-init.yaml) from our [cloud-init-examples](https://github.com/caltechlibrary/cloud-init-examples) repository. This version of `newt-init.yaml` is tuned to support Opensearch and also provides the full "Newt" setup as that is an easy way to generate applications for experimenting with Opensearch.
+This repository includes a copy of [opensearch-init.yaml](opensearch-init.yaml) from our [cloud-init-examples](https://github.com/caltechlibrary/cloud-init-examples) repository. This version of `opensearch-init.yaml` is tuned to support Opensearch and also provides the full "Newt" setup as that is an easy way to generate applications for experimenting with Opensearch.
 
 These instructions do not supersede the documentation on Opensearch.org at <https://opensearch.org/docs/latest/install-and-configure/install-opensearch/debian/> and <https://opensearch.org/docs/latest/install-and-configure/install-dashboards/debian/>.
 

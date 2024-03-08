@@ -1,47 +1,85 @@
 #cloud-config
 #
-# Newstack-init.yaml provides a development environemt for building
+# opensearch-init.yaml provides a development environemt for building
 # web applications based on PostgreSQL 16, PostgREST 12, Pandoc 3.1,
 # and using Python 3's http.server to emulate a front end web server.
 #
 # This cloud init target Ubuntu's Multipass and assume the image
 # available is Jammy (22.04 LTS). Here's an example creating a VM
-# with Multipass call "newstack" and accessing it via Multipass's
+# with Multipass call "opensearch-machine" and accessing it via Multipass's
 # shell.
 #
 # You need more than the default disk image size for fit all the stuff.
 # When you initialize your VM use the following command
 #
 # ~~~
-# multipass launch --disk 50G \
-#           --memory 2G \
-#           --name newstack \
-#           --cloud-init newstack-init.yaml
+# multipass launch --name opensearch-machine \
+#                  --memory 2G \
+#                  --disk 24G \
+#                  --cloud-init opensearch-init.yaml
 # ~~~
 #
 # When you're done you can stop the VM with
 #
 # ~~~
-# multipass stop newstack
+# multipass stop opensearch-machine
 # ~~~
 #
-# You can remove newstack completely with
+# You can remove opensearch-machine completely with
 #
 # ~~~
-# multipass stop newstack
-# multipass purge newstack
+# multipass stop opensearch-machine
+# multipass delete opensearch-machine
+# multipass purge opensearch-machine
 # ~~~
 #
 # The first time you run your VM you will need to run the following
-# additional setup bash scripts to install Haskell (GHCup) so you can
-# compile the latest Pandoc and PostgREST.
+# additional setup bash scripts. Then you can choose to install
+# to install Haskell (GHCup) so you can compile the latest Pandoc and PostgREST
+# and Opensearch/Opensearch Dashboard.
 #
-# 1. setup-home-bin.bash, create "$HOME/bin" and adds it to your .bashrc
-# 2. gchup-install.bash, installs Haskell via GHCup
-# 3. pandoc-build.bash, builds Pandoc from source using cabal
-# 4. postgrest-build.bash, builds PostgREST from source using stack
+# 1. 01-setup-scripts.bash, create "$HOME/sbin" and adds it to your .bashrc
+# 2. 02-add-python-packages.bash, adds commonly used Python packages to the system
+# 3. 03-add-go-and-caltechlibrary-tools.bash, builds and install DLD Go based tools
+# 4. 04-ghcup-install.bash, installs Haskell toolchain and manager
+# 5. 05-pandoc-build.bash, downloads the latest Pandoc and builds it
+# 6. 06-postgrest-build.bash, downloads the latest PostgREST and builds it.
+# 7. 07-add-opensearch.bash, downloads the Opensearch/Opensearch Dashbaord debs and installs them
 #
 write_files:
+  - content: |
+      You are now ready to start working with your Opensearch Machine. Run
+      You then need to run following to configure this virtual machine for
+      development. 
+
+          bash ./sbin/01-setup-scripts.bash
+
+      Your may wish to run other scripts in the `$HOME/sbin` directory
+      depending on your development needs.
+      Finnally remember to resource your `.bashrc` file after you install
+      any software to pickup the environment changes defined in it.
+
+          source $HOME/.bashrc
+    path: README.1st
+    owner: ubuntu:ubuntu
+    permissions: '0664'
+  - content: |
+      #!/bin/bash
+      mkdir -p $HOME/bin
+      mkdir -p $HOME/sbin
+      echo 'export PATH="$HOME/bin:$HOME/sbin:$PATH"' >>"${HOME}/.bashrc"
+      cat <<EOT
+
+      You have added ${HOME}/bin to the PATH in your .bashrc
+      file. To update the path without logging out and in
+      do
+      
+              source $HOME/.bashrc
+      
+      EOT
+    path: /home/ubuntu/sbin/01-setup-scripts.bash
+    owner: ubuntu:ubuntu
+    permissions: '0775'
   - content: |
       #!/bin/bash
       python3 -m pip install idutils
@@ -51,8 +89,8 @@ write_files:
       python3 -m pip install pybtex
       python3 -m pip install feedgen
       python3 -m pip install python-dateutil
-    path: /usr/local/sbin/01-add-python-packages.bash
-    owner: root:root
+    path: /home/ubuntu/sbin/02-add-python-packages.bash
+    owner: ubuntu:ubuntu
     permissions: '0775'
   - content: |
       #!/bin/bash
@@ -70,22 +108,14 @@ write_files:
         cd "${HOME}/src/github.com/caltechlibrary"
       done
       cd 
-    path: /usr/local/sbin/02-add-go-and-caltechlibrary-tools.bash
-    owner: root:root
+    path: /home/ubuntu/sbin/03-add-go-and-caltechlibrary-tools.bash
+    owner: ubuntu:ubuntu
     permissions: '0775'
   - content: |
       #!/bin/bash
-      #export BOOTSTRAP_HASKELL_NONINTERACTIVE=1
-      #export BOOTSTRAP_HASKELL_GHC_VERSION=recommended
-      #export BOOTSTRAP_HASKELL_CABAL_VERSION=recommended
-      #export BOOTSTRAP_HASKELL_INSTALL_STACK=1
-      #export BOOTSTRAP_HASKELL_INSTALL_HLS=1
-      #export BOOTSTRAP_HASKELL_ADJUST_BASHRC=P 
-      #curl --proto '=https' --tlsv1.2 \
-      #     -sSf https://get-ghcup.haskell.org | sh
       curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org | sh
-    path: /usr/local/sbin/03-ghcup-install.bash
-    owner: root:root
+    path: /home/ubuntu/sbin/04-ghcup-install.bash
+    owner: ubuntu:ubuntu
     permissions: '0775'
   - content: |
       #!/bin/bash
@@ -97,8 +127,8 @@ write_files:
       make
       cp -v $(find . -type f -name pandoc) "${HOME}/bin"
       cp -v $(find . -type f -name pandoc) "${HOME}/bin/pandoc-server"
-    path: /usr/local/sbin/04-pandoc-build.bash
-    owner: root:root
+    path: /home/ubuntu/sbin/05-pandoc-build.bash
+    owner: ubuntu:ubuntu
     permissions: '0775'
   - content: |
       #!/bin/bash
@@ -107,8 +137,8 @@ write_files:
       cd src/postgres 
       stack build --install-ghc --copy-bins --local-bin-path $HOME/bin
       cd
-    path: /usr/local/sbin/05-postgrest-build.bash
-    owner: root:root
+    path: /home/ubuntu/sbin/06-postgrest-build.bash
+    owner: ubuntu:ubuntu
     permissions: '0775'
   - content: |
       #!/bin/bash
@@ -127,24 +157,8 @@ write_files:
          echo "Unsupport CPU ${CPU} see <https://opensearch.org/downloads.html>"
          ;;
       esac
-    path: /usr/local/sbin/06-add-opensearch.bash
-    owner: root:root
-    permissions: '0775'
-  - content: |
-      #!/bin/bash
-      mkdir -p $HOME/bin
-      echo 'export PATH="$HOME/bin:$PATH"' >>"${HOME}/.bashrc"
-      cat <<EOT
-
-      You have added ${HOME}/bin to the PATH in your .bashrc
-      file. To update the path without logging out and in
-      do
-      
-              source $HOME/.bashrc
-      
-      EOT
-    path: /usr/local/sbin/07-setup-home-bin.bash
-    owner: root:root
+    path: /home/ubuntu/sbin/07-add-opensearch.bash
+    owner: ubuntu:ubuntu
     permissions: '0775'
 package_upgrade: true
 # Install additional packages on first boot
@@ -198,5 +212,3 @@ packages:
   - libncurses-dev
   - libncurses5
   - libtinfo5
-# Note we install Ubuntu/Debian's Pandoc 2.9 because GHC may have issues on aarch64.
-  - pandoc

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Newt -- README</title>
+    <title>Opensearch Machine</title>
     <link rel="stylesheet" href="https://caltechlibrary.github.io/css/site.css">
     <base href="./">
 </head>
@@ -43,7 +43,7 @@ alt="Latest release" /></a>
 <h2 id="table-of-contents">Table of contents</h2>
 <ul>
 <li><a href="#introduction">Introduction</a></li>
-<li>Installation/<a href="#quick-start">Quick start</a></li>
+<li><a href="#quick-start">Quick start</a></li>
 <li><a href="#usage">Usage</a></li>
 <li><a href="#known-issues-and-limitations">Known issues and
 limitations</a></li>
@@ -60,17 +60,16 @@ Multipass managed virtual machine. It includes documentation describing
 how to create a indexes, index aliases and backing up those indexes
 outside the virtual machine.</p>
 <h2 id="quick-start">Quick start</h2>
-<p>Use the <a href="newt-init.yaml">newt-init.yaml</a> file to create a
-Multipass managed virtual machine. Then run the numbered scripts found
-in <code>/usr/local/sbin</code> to complete the installation
-process.</p>
+<p>Use the <a href="opensearch-init.yaml">opensearch-init.yaml</a> file
+to create a Multipass managed virtual machine. Then run the numbered
+scripts found in <code>/usr/local/sbin</code> to complete the
+installation process.</p>
 <h3 id="creating-launching-the-virtual-machine-with-multipass">Creating
 (Launching) the virtual machine with Multipass</h3>
 <div class="sourceCode" id="cb1"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">multipass</span> launch <span class="at">--name</span> opensearch-machine</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>          <span class="ex">--disk</span> 50G <span class="dt">\</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">--memory</span> 2G <span class="dt">\</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">--name</span> newstack <span class="dt">\</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">--cloud-init</span> newt-init.yaml</span></code></pre></div>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">--cloud-init</span> opensearch-init.yaml</span></code></pre></div>
 <h3 id="working-in-your-virtual-machine">Working in your virtual
 machine</h3>
 <div class="sourceCode" id="cb2"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">multipass</span> shell opensearch-machine</span></code></pre></div>
@@ -79,6 +78,8 @@ machine</h3>
 user) run the following scripts.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">/usr/local/sbin/01-add-python-packages.bash</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">/usr/local/sbin/06-add-opensearch.bash</span></span></code></pre></div>
+<p>At this point you should have Opensearch and opensearch Dashboard
+running in your virtual machine, ready to explore.</p>
 <h2 id="usage">Usage</h2>
 <p>Once you have your virtual machine up and running with Opensearch and
 the Opensearch dashboard you should be able to access it from your host

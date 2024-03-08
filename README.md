@@ -10,7 +10,7 @@ This repository contains instructions for setting up a [Multipass](https://multi
 ## Table of contents
 
 * [Introduction](#introduction)
-* Installation/[Quick start](#quick-start)
+* [Quick start](#quick-start)
 * [Usage](#usage)
 * [Known issues and limitations](#known-issues-and-limitations)
 * [Getting help](#getting-help)
@@ -25,7 +25,7 @@ This repository is focused on creating a Multipass virtual machine for learning 
 
 ## Quick start
 
-Use the [newt-init.yaml](newt-init.yaml) file to create a Multipass managed virtual machine. Then run the numbered scripts found in `/usr/local/sbin` to complete the installation process.
+Use the [opensearch-init.yaml](opensearch-init.yaml) file to create a Multipass managed virtual machine. Then run the numbered scripts found in `/usr/local/sbin` to complete the installation process.
 
 ### Creating (Launching) the virtual machine with Multipass
 
@@ -33,8 +33,7 @@ Use the [newt-init.yaml](newt-init.yaml) file to create a Multipass managed virt
 multipass launch --name opensearch-machine
           --disk 50G \
           --memory 2G \
-          --name newstack \
-          --cloud-init newt-init.yaml
+          --cloud-init opensearch-init.yaml
 ```
 
 ### Working in your virtual machine
@@ -51,6 +50,8 @@ While in the shell of your virtual machine (you are the "ubuntu" user) run the f
 /usr/local/sbin/01-add-python-packages.bash
 /usr/local/sbin/06-add-opensearch.bash
 ```
+
+At this point you should have Opensearch and opensearch Dashboard running in your virtual machine, ready to explore.
 
 ## Usage
 
