@@ -247,3 +247,4 @@ packages:
   - libncurses-dev
   - libncurses5
   - libtinfo5
+  - httpie
