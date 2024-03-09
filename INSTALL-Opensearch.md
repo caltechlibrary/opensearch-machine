@@ -1,6 +1,6 @@
-# Opensearch v7.x
+# Opensearch v1.3.15
 
-You can go to [Opensearch website](https://opensearch.org/downloads.html) and download the appropriate Opensearch program. The v2.x releases are the current ones as of February 2024. While Opensearch is written in Java and should run on systems that support Java the "proc" file system is used in some of it's components so it is happiest running under Linux. These instructions presume running under Ubuntu/Debian Linux and will focus on that.  [Multipass](https://multipass.run) runs on macOS, Windows 11 and Linux. Multipass will provided you with an Ubuntu virtual machine that closely matches what we use in production on AWS as well is that operating systems we use on physical machines in our server room.
+You can go to [Opensearch website](https://opensearch.org/versions/opensearch-1-3-15.html) and download the appropriate Opensearch program. The v1.3.15 release are the current v1 release as of February 2024. While Opensearch is written in Java and should run on systems that support Java the "proc" file system is used in some of it's components so it is happiest running under Linux. These instructions presume running under Ubuntu/Debian Linux and will focus on that.  [Multipass](https://multipass.run) runs on macOS, Windows 11 and Linux. Multipass will provided you with an Ubuntu virtual machine that closely matches what we use in production on AWS as well is that operating systems we use on physical machines in our server room.
 
 On the Opensearch downloads page under the Linux Platform select box you can pick the CPU type and "Deb" releases. This is what will be used in the cloud-init file provided in this repository.
 

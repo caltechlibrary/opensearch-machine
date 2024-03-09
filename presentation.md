@@ -30,19 +30,18 @@ url: "https://caltechlibrary.github.io/opensearch-machine/blob/main/presentation
     - HTTP, HTTP methods (e.g. GET, POST)
     - HTML and JSON documents
 
-# System Requirements
+# System Requirements (Host machine)
 
 - macOS, Linix or Windows based machine (ARM or Intel CPU)
 - [Multipass](https://multipass.run)
 
-# Software Requirements
+# Software Requirements (Host machine)
 
 - Web browser (e.g. Firefox)
-- Python 3 installed (we will use it for a localhost webserver)
 - [cURL](https://curl.se)
 - A plain text editor
 
-# What we'll be doing
+# What we'll be doing (host and virtual machine)
 
 - Running programs "terminal" or "shell"
 - using a program called `curl` to work with Opensearch
@@ -53,11 +52,21 @@ url: "https://caltechlibrary.github.io/opensearch-machine/blob/main/presentation
 
 1. Make sure Multipass is installed and working
 2. Know how to launch, start, stop, delete, purge your virtual machine
-3. Make sure Python 3 is installed
 
 # Getting started
 
-- TBD
+1. Run `./opensearch-machine.bash` to create the `opensearch-machine` virtual machine
+2. Run `multipass shell opensearch-machine` to finish setting things up
+
+## On, opensearch-marchine
+
+1. Run `01-setup-scripts.bash`
+2. Run `07-add-opensearch.bash`
+
+## On your host machine
+
+1. Use `multipass info opensearch-machine` to find the IP address of the virtual machine
+2. 
 
 # Finishing installation
 

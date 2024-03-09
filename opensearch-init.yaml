@@ -47,22 +47,22 @@
 # 7. 07-add-opensearch.bash, downloads the Opensearch/Opensearch Dashbaord debs and installs them
 #
 write_files:
-  - content: |
-      You are now ready to start working with your Opensearch Machine. Run
-      You then need to run following to configure this virtual machine for
-      development. 
-
-          bash ./sbin/01-setup-scripts.bash
-
-      Your may wish to run other scripts in the `$HOME/sbin` directory
-      depending on your development needs.
-      Finnally remember to resource your `.bashrc` file after you install
-      any software to pickup the environment changes defined in it.
-
-          source $HOME/.bashrc
-    path: /home/ubuntu/README.1st
-    owner: ubuntu:ubuntu
-    permissions: '0664'
+###   - content: |
+###       You are now ready to start working with your Opensearch Machine. Run
+###       You then need to run following to configure this virtual machine for
+###       development. 
+### 
+###           bash ./sbin/01-setup-scripts.bash
+### 
+###       Your may wish to run other scripts in the `$HOME/sbin` directory
+###       depending on your development needs.
+###       Finnally remember to resource your `.bashrc` file after you install
+###       any software to pickup the environment changes defined in it.
+### 
+###           source $HOME/.bashrc
+###     path: /home/ubuntu/README.1st
+###     owner: ubuntu:ubuntu
+###     permissions: '0664'
   - content: |
       #!/bin/bash
       mkdir -p $HOME/bin
@@ -74,7 +74,7 @@ write_files:
       file. To update the path without logging out and in
       do
       
-              source $HOME/.bashrc
+              . $HOME/.bashrc
       
       EOT
     path: /usr/local/sbin/01-setup-scripts.bash
@@ -89,6 +89,16 @@ write_files:
       python3 -m pip install pybtex
       python3 -m pip install feedgen
       python3 -m pip install python-dateutil
+      cat <<EOT >$HOME/bin/ws
+      #!/bin/bash
+      echo "Enter Ctlr-c to exit web server"
+      if [ "$1" != "" ]; then
+      	python3 -m http.server "$1"
+      else
+      	python3 -m http.server
+      fi
+      EOT
+      chmod 775 $HOME/bin/ws
     path: /usr/local/sbin/02-add-python-packages.bash
     owner: root:root
     permissions: '0775'
@@ -143,20 +153,45 @@ write_files:
   - content: |
       #!/bin/bash
       cd
+      echo -n "Enter an admin password to use with Opensearch: "
+      read -s ADMIN_PASSWORD
+      cat <<EOT1 >>.bashrc
+      
+      # Opensearch Inital Admin Setup
+      export OPENSEARCH_INITIAL_ADMIN_PASSWORD="${ADMIN_PASSWORD}"
+      
+      EOT1
+      
       CPU="$(uname -m)"
       case "${CPU}" in
          x86_64|amd64)
-           curl -L -O https://artifacts.opensearch.org/releases/bundle/opensearch/2.12.0/opensearch-2.12.0-linux-x64.deb
-           dpkg -i opensearch-2.12.0-linux-x64.deb
+           curl -L -O https://artifacts.opensearch.org/releases/bundle/opensearch-dashboards/2.3.0/opensearch-dashboards-2.3.0-linux-x64.deb
+           curl -L -O https://artifacts.opensearch.org/releases/bundle/opensearch/2.3.0/opensearch-2.3.0-linux-x64.deb
+           sudo env OPENSEARCH_INITIAL_ADMIN_PASSWORD="$ADMIN_PASSWORD" \
+                dpkg -i opensearch-2.3.0-linux-x64.deb
+           sudo env OPENSEARCH_INITIAL_ADMIN_PASSWORD="$ADMIN_PASSWORD" \
+                dpkg -i opensearch-dashboards-2.3.0-linux-x64.deb
            ;;
          arm64|aarch64)
-           curl -L -O https://artifacts.opensearch.org/releases/bundle/opensearch/2.12.0/opensearch-2.12.0-linux-arm64.deb
-           dpkg -i opensearch-2.12.0-linux-arm64.deb
+           curl -L -O https://artifacts.opensearch.org/releases/bundle/opensearch-dashboards/2.3.0/opensearch-dashboards-2.3.0-linux-arm64.deb
+           curl -L -O https://artifacts.opensearch.org/releases/bundle/opensearch/2.3.0/opensearch-2.3.0-linux-arm64.deb
+           sudo env OPENSEARCH_INITIAL_ADMIN_PASSWORD="$ADMIN_PASSWORD" \
+                dpkg -i opensearch-2.3.0-linux-arm64.deb
+           sudo env OPENSEARCH_INITIAL_ADMIN_PASSWORD="$ADMIN_PASSWORD" \
+                dpkg -i opensearch-dashboards-2.3.0-linux-arm64.deb
            ;;
          *)
          echo "Unsupport CPU ${CPU} see <https://opensearch.org/downloads.html>"
          ;;
       esac
+      sudo adduser "$USER" opensearch
+      sudo systemctl enable opensearch
+      sudo systemctl start opensearch
+      sudo systemctl status opensearch
+      sudo systemctl daemon-reload
+      sudo systemctl enable opensearch-dashboards
+      sudo systemctl start opensearch-dashboards
+      sudo systemctl status opensearch-dashboards
     path: /usr/local/sbin/07-add-opensearch.bash
     owner: root:root
     permissions: '0775'

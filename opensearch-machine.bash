@@ -99,9 +99,11 @@ cat <<EOT
      multipass shell ${VM_NAME}
 
  To access your virtual machine. You then need to run the
- following to configure the "ubuntu" account to do further
- installation of software.
+ following three comannds to configure the "ubuntu" account
+ and install opensearch.
 
-     bash ./sbin/01-setup-scripts.bash
+     01-setup-scripts.bash
+     07-add-opensearch.bash
+     . .bashrc
 
 EOT
