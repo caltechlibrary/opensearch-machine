@@ -36,19 +36,21 @@ and exploring Opensearch using a Multipass managed virtual machine</h2>
 <li>HTML and JSON documents</li>
 </ul></li>
 </ul>
-<h1 id="system-requirements">System Requirements</h1>
+<h1 id="system-requirements-host-machine">System Requirements (Host
+machine)</h1>
 <ul>
 <li>macOS, Linix or Windows based machine (ARM or Intel CPU)</li>
 <li><a href="https://multipass.run">Multipass</a></li>
 </ul>
-<h1 id="software-requirements">Software Requirements</h1>
+<h1 id="software-requirements-host-machine">Software Requirements (Host
+machine)</h1>
 <ul>
 <li>Web browser (e.g. Firefox)</li>
-<li>Python 3 installed (we will use it for a localhost webserver)</li>
 <li><a href="https://curl.se">cURL</a></li>
 <li>A plain text editor</li>
 </ul>
-<h1 id="what-well-be-doing">What we’ll be doing</h1>
+<h1 id="what-well-be-doing-host-and-virtual-machine">What we’ll be doing
+(host and virtual machine)</h1>
 <ul>
 <li>Running programs “terminal” or “shell”</li>
 <li>using a program called <code>curl</code> to work with
@@ -61,21 +63,30 @@ Opensearch</li>
 <li>Make sure Multipass is installed and working</li>
 <li>Know how to launch, start, stop, delete, purge your virtual
 machine</li>
-<li>Make sure Python 3 is installed</li>
 </ol>
 <h1 id="getting-started">Getting started</h1>
-<ul>
-<li>TBD</li>
-</ul>
-<h1 id="finishing-installation">Finishing installation</h1>
-<ul>
-<li>TBD</li>
-</ul>
-<h1 id="starting-up-opensearch-and-opensearch-dashboard">Starting up
-Opensearch and Opensearch Dashboard</h1>
-<ul>
-<li>TBD</li>
-</ul>
+<ol type="1">
+<li>Run <code>./opensearch-machine.bash</code> to create the
+<code>opensearch-machine</code> virtual machine</li>
+<li>Run <code>multipass shell opensearch-machine</code> to finish
+setting things up</li>
+</ol>
+<h2 id="on-opensearch-marchine">On, opensearch-marchine</h2>
+<ol type="1">
+<li>Run <code>01-setup-scripts.bash</code></li>
+<li>Run <code>07-add-opensearch.bash</code></li>
+<li>Source the updated <code>.bashrc</code> file.</li>
+</ol>
+<h2 id="on-your-host-machine">On your host machine</h2>
+<ol type="1">
+<li>Use <code>multipass info opensearch-machine</code> to find the IP
+address of the virtual machine</li>
+<li>Point your web browser at virtual machine using the port number for
+opensearch REST API or Dashboard.</li>
+</ol>
+<blockquote>
+<p>Now we’re ready to start working with Opensearch</p>
+</blockquote>
 <h1 id="what-is-an-index">What is an index?</h1>
 <ul>
 <li>TBD</li>

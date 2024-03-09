@@ -58,23 +58,18 @@ url: "https://caltechlibrary.github.io/opensearch-machine/blob/main/presentation
 1. Run `./opensearch-machine.bash` to create the `opensearch-machine` virtual machine
 2. Run `multipass shell opensearch-machine` to finish setting things up
 
-## On, opensearch-marchine
+# On, opensearch-machine
 
 1. Run `01-setup-scripts.bash`
 2. Run `07-add-opensearch.bash`
+3. Source the updated `.bashrc` file.
 
-## On your host machine
+# On your host machine
 
 1. Use `multipass info opensearch-machine` to find the IP address of the virtual machine
-2. 
+2. Point your web browser at virtual machine using the port number for opensearch REST API or Dashboard.
 
-# Finishing installation
-
-- TBD
-
-# Starting up Opensearch and Opensearch Dashboard
-
-- TBD
+> Now we're ready to start working with Opensearch
 
 # What is an index?
 
