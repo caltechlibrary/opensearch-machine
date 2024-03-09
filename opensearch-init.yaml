@@ -14,8 +14,8 @@
 #
 # ~~~
 # multipass launch --name opensearch-machine \
-#                  --memory 2G \
-#                  --disk 24G \
+#                  --memory 4G \
+#                  --disk 50G \
 #                  --cloud-init opensearch-init.yaml
 # ~~~
 #
