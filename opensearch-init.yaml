@@ -248,3 +248,4 @@ packages:
   - libncurses5
   - libtinfo5
   - httpie
+  - npm
