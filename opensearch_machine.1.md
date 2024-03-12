@@ -34,7 +34,7 @@ help, -h, --help
 
 # EXAMPLES
 
-Creating the Opensearch Machine using Cloud Init and Multipass
+Creating the OpenSearch Machine using Cloud Init and Multipass
 from this repository.
 
 ~~~sh

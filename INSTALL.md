@@ -1,7 +1,7 @@
 
 # Installation and setup of this repository
 
-This repository is designed to provide an easy setup of Opensearch using Multipass and cloud init files.
+This repository is designed to provide an easy setup of OpenSearch using Multipass and cloud init files.
 
 The following are required to run the examples documented here.
 

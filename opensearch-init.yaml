@@ -36,7 +36,7 @@
 # The first time you run your VM you will need to run the following
 # additional setup bash scripts. Then you can choose to install
 # to install Haskell (GHCup) so you can compile the latest Pandoc and PostgREST
-# and Opensearch/Opensearch Dashboard.
+# and OpenSearch/OpenSearch Dashboard.
 #
 # 1. 01-setup-scripts.bash, creates "$HOME/bin" and "$HOME/sbin" and adds things ito your .bashrc
 # 2. 02-add-python-packages.bash, adds commonly used Python packages to the system
@@ -44,11 +44,11 @@
 # 4. 04-ghcup-install.bash, installs Haskell toolchain and manager
 # 5. 05-pandoc-build.bash, downloads the latest Pandoc and builds it
 # 6. 06-postgrest-build.bash, downloads the latest PostgREST and builds it.
-# 7. 07-add-opensearch.bash, downloads the Opensearch/Opensearch Dashbaord debs and installs them
+# 7. 07-add-opensearch.bash, downloads the OpenSearch/OpenSearch Dashbaord debs and installs them
 #
 write_files:
 ###   - content: |
-###       You are now ready to start working with your Opensearch Machine. Run
+###       You are now ready to start working with your OpenSearch Machine. Run
 ###       You then need to run following to configure this virtual machine for
 ###       development. 
 ### 
@@ -154,11 +154,11 @@ write_files:
   - content: |
       #!/bin/bash
       cd
-      echo -n "Enter an admin password to use with Opensearch: "
+      echo -n "Enter an admin password to use with OpenSearch: "
       read -s ADMIN_PASSWORD
       cat <<EOT1 >>.bashrc
       
-      # Opensearch Inital Admin Setup
+      # OpenSearch Inital Admin Setup
       export OPENSEARCH_INITIAL_ADMIN_PASSWORD="${ADMIN_PASSWORD}"
       
       EOT1

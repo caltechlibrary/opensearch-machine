@@ -1,6 +1,7 @@
-# Opensearch Machine
 
-This repository contains instructions for setting up a [Multipass](https://multipass.run) managed virtual machine for learning and experimentation Opensearch. Multipass runs on macOS, Windows and Linux. It provides an Ubuntu Linux machine. Opensearch while written in Java is tailored to run under a Linux environment. Opensearch is a full text search engine based on a forked implementation of Elasticsearch full text search engine. Opensearch is the search engine used in Invenio-RDM.
+# OpenSearch Machine
+
+This repository contains instructions for setting up a [Multipass](https://multipass.run) managed virtual machine for learning and experimentation OpenSearch. Multipass runs on macOS, Windows and Linux. It provides an Ubuntu Linux machine. OpenSearch while written in Java is tailored to run under a Linux environment. OpenSearch is a full text search engine based on a forked implementation of Elasticsearch full text search engine. OpenSearch is the search engine used in Invenio-RDM.
 
 [![License](https://img.shields.io/badge/License-BSD--like-lightgrey)](https://github.com/caltechlibrary/opensearch-machine/blob/main/LICENSE)
 [![Latest release](https://img.shields.io/github/v/release/caltechlibrary/opensearch-machine.svg?color=b44e88)](https://github.com/caltechlibrary/opensearch-machine/releases)
@@ -21,7 +22,7 @@ This repository contains instructions for setting up a [Multipass](https://multi
 
 ## Introduction
 
-This repository is focused on creating a Multipass virtual machine for learning and exploring Opensearch. It includes brief instructions for installation of Opensearch and Opensearch Dashboard running under a Multipass managed virtual machine. It includes documentation describing how to create a indexes, index aliases and backing up those indexes outside the virtual machine.
+This repository is focused on creating a Multipass virtual machine for learning and exploring OpenSearch. It includes brief instructions for installation of OpenSearch and OpenSearch Dashboard running under a Multipass managed virtual machine. It includes documentation describing how to create a indexes, index aliases and backing up those indexes outside the virtual machine.
 
 ## Quick start
 
@@ -48,7 +49,7 @@ While in the shell of your virtual machine (you are the "ubuntu" user) run the f
 07-add-opensearch.bash
 ```
 
-At this point you should have Opensearch and opensearch Dashboard running in your virtual machine, ready to explore.
+At this point you should have OpenSearch and OpenSearch Dashboard running in your virtual machine, ready to explore.
 
 ## Stopping and removing your virtual machine
 
@@ -60,13 +61,13 @@ multipass purge
 
 ## Usage
 
-Once you have your virtual machine up and running with Opensearch and the Opensearch dashboard you should be able to access it from your host machine using SSH port mapping to interact with the Opensearch REST API and the Opensearch dashboard.
+Once you have your virtual machine up and running with OpenSearch and the OpenSearch dashboard you should be able to access it from your host machine using SSH port mapping to interact with the OpenSearch REST API and the OpenSearch dashboard.
 
-You can find out more about using Multipass to manage virtual machines at <https://multipass.run>. You can find out more about Opensearch and Opensearch Dashboard at <https://opensearch.org/docs/latest/about/>
+You can find out more about using Multipass to manage virtual machines at <https://multipass.run>. You can find out more about OpenSearch and OpenSearch Dashboard at <https://opensearch.org/docs/latest/about/>
 
 ## Known issues and limitations
 
-These instructions focus on running Opensearch for the purpose of learning and experimentation. It does not cover setup and configuration of running Opensearch in a production environment. There are many additional considerations in that setting. Consult the [Opensearch](https://opensearch.org) website and your system administrator(s) to explore those issues.
+These instructions focus on running OpenSearch for the purpose of learning and experimentation. It does not cover setup and configuration of running OpenSearch in a production environment. There are many additional considerations in that setting. Consult the [OpenSearch](https://opensearch.org) website and your system administrator(s) to explore those issues.
 
 ## Getting help
 
