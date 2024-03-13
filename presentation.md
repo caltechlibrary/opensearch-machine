@@ -119,7 +119,17 @@ If you do not include any options it will display a help page.
 
 ~~~shell
 curl -k --user admin:admin \
-  https://localhost:9200/contact-list?pretty
+  -X PUT https://localhost:9200/contact-list?pretty
+~~~
+
+# Response from creating the index
+
+~~~json
+{
+  "acknowledged" : true,
+  "shards_acknowledged" : true,
+  "index" : "contact-list"
+}
 ~~~
 
 # Creating a document in our index
@@ -128,25 +138,26 @@ curl -k --user admin:admin \
 
 ~~~shell
 curl -k --user admin:admin \
+  -H 'Content-Type: application/json' \
   --data '{"name": "Robert", "email": "rsdoiel@caltech.edu", "orcid": "0000-0003-0900-6903"}' \
-  https://localhost:9200/contact-list/_doc/0000-0003-0900-6903?pretty
+  -X POST https://localhost:9200/contact-list/_doc/0000-0003-0900-6903?pretty
 ~~~
 
 # Response from creating our document
 
 ~~~json
 {
-  "_index": "contact-list",
-  "_id": "0000-0003-0900-6903",
-  "_version": 1,
-  "result": "created",
-  "_shards": {
-    "total": 2,
-    "successful": 1,
-    "failed": 0
+  "_index" : "contact-list",
+  "_id" : "0000-0003-0900-6903",
+  "_version" : 1,
+  "result" : "created",
+  "_shards" : {
+    "total" : 2,
+    "successful" : 1,
+    "failed" : 0
   },
-  "_seq_no": 0,
-  "_primary_term": 1
+  "_seq_no" : 0,
+  "_primary_term" : 1
 }
 ~~~
 
@@ -183,12 +194,12 @@ curl -k --user admin:admin \
 
 ~~~shell
 curl -k --user admin:admin \
-  https://localhost:9200/contact-list/_search?q=robert \
+  https://localhost:9200/contact-list/_search?q=robert | \
   jq .
 ~~~
 
-NOTE: The `?pretty` option doesn't work on `_search` queries. That's pretty sad IMO.
-But we have `jq` to help us out.
+NOTE: The "`?pretty`" option doesn't work on "`_search`" queries.
+But we have "`jq .`" to help us out.
 
 # Search results
 
@@ -338,40 +349,87 @@ curl -k --user admin:admin \
 
 ~~~json
 {
-	"_index":"contact-list",
-	"_id":"0000-0003-0900-6903",
-	"_version":2,
-	"result":"deleted",
-	"_shards":{
-		"total":2,
-		"successful":1,
-		"failed":0
-	},
-	"_seq_no":1,
-	"_primary_term":1
+  "_index" : "contact-list",
+  "_id" : "0000-0003-0900-6903",
+  "_version" : 3,
+  "result" : "deleted",
+  "_shards" : {
+    "total" : 2,
+    "successful" : 1,
+    "failed" : 0
+  },
+  "_seq_no" : 2,
+  "_primary_term" : 1
 }
 ~~~
+
+# Adding back our deleted document
+
+~~~shell
+curl -k --user admin:admin \
+  -H 'Content-Type: application/json' \
+  --data '{"name": "Robert", "email": "rsdoiel@caltech.edu", "orcid": "0000-0003-0900-6903"}' \
+  -X POST https://localhost:9200/contact-list/_doc/0000-0003-0900-6903?pretty
+~~~
+
+# Response from adding back our document
+
+~~~json
+{
+  "_index" : "contact-list",
+  "_id" : "0000-0003-0900-6903",
+  "_version" : 1,
+  "result" : "created",
+  "_shards" : {
+    "total" : 2,
+    "successful" : 1,
+    "failed" : 0
+  },
+  "_seq_no" : 3,
+  "_primary_term" : 1
+}
+~~~
+
+NOTE: We can actually do an "add" with a POST, the "`_version`" is set back to "1".
 
 # Dumping our index with elasticdump
 
 <https://inveniordm.docs.cern.ch/develop/howtos/backup_search_indices/#elasticdump>
 
+Dumping our index data:
+
+~~~shell
+env NODE_TLS_REJECT_UNAUTHORIZED=0 elasticdump \
+   --input https://admin:admin@localhost:9200/contact-list \
+   --output contact-list.data.json \
+   --type data
+~~~
+
+If we had created an "index map" we'd want to dump that too.
+
 For index mappings:
 
 ~~~shell
-env NODE_TLS_REJECT_UNAUTHORIZED=0 elasticdump \    
+env NODE_TLS_REJECT_UNAUTHORIZED=0 elasticdump \
    --input https://admin:admin@localhost:9200/contact-list \
    --output contact-list.mappings.json \
    --type mapping
 ~~~
 
-For index data:
+# Here's what our data dump looks like
 
-~~~shell
-env NODE_TLS_REJECT_UNAUTHORIZED=0 elasticdump \    
-   --input https://admin:admin@localhost:9200/contact-list \
-   --output contact-list.data.json \
-   --type data
+~~~json
+jq . contact-list-data.json
+{
+  "_index": "contact-list",
+  "_id": "0000-0003-0900-6903",
+  "_score": 1,
+  "_source": {
+    "name": "Robert",
+    "email": "rsdoiel@caltech.edu",
+    "orcid": "0000-0003-0900-6903"
+  }
+}
 ~~~
 
 # Dropping an index
@@ -383,24 +441,31 @@ curl -k --user admin:admin \
   -X DELETE https://localhost:9200/contact-list
 ~~~
 
+The response should look like
+
+~~~json
+{"acknowledged":true}
+~~~
+
 # Restoring an index with elasticdump
 
-For index mapping:
-
-~~~shell
-env NODE_TLS_REJECT_UNAUTHORIZED=0 elasticdump \    
-   --input contact-list.mappings.json \
-   --oputput https://admin:admin@localhost:9200/contact-list \
-   --type mapping
-~~~
 
 For index data:
 
 ~~~shell
-env NODE_TLS_REJECT_UNAUTHORIZED=0 elasticdump \    
+env NODE_TLS_REJECT_UNAUTHORIZED=0 elasticdump \
    --input contact-list.data.json \
-   --oputput https://admin:admin@localhost:9200/contact-list \
+   --output https://admin:admin@localhost:9200/contact-list \
    --type data
+~~~
+
+For index mapping:
+
+~~~shell
+env NODE_TLS_REJECT_UNAUTHORIZED=0 elasticdump \
+   --input contact-list.mappings.json \
+   --output https://admin:admin@localhost:9200/contact-list \
+   --type mapping
 ~~~
 
 # What we've learned so far
@@ -412,16 +477,31 @@ env NODE_TLS_REJECT_UNAUTHORIZED=0 elasticdump \
 
 ------------------
 
-# Part: III: Where to go from here?
+# Part: III: Future topics to explore
 
-OpenSearch provides additional features
+OpenSearch provides many additional features
 
-- Index mapping
-- Aggregations
+- Improves search results using index mapping
+  <https://opensearch.org/docs/latest/field-types/>
+- Support analytics with aggregations
+  <https://opensearch.org/docs/latest/aggregations/>
 
-These are used heavily in Invenio RDM
+Both are used heavily in Invenio RDM
 
-# Managing OpenSearch Options
+# Future topics to explore (continued)
+
+OpenSearch provides many additional features
+
+- Process data sets with ingest pipelines
+  <https://opensearch.org/docs/latest/ingest-pipelines/>
+- Improve results with text analysis
+  <https://opensearch.org/docs/latest/analyzers/>
+- GIS visualization
+  <https://opensearch.org/docs/latest/dashboards/visualize/maps/>
+- ML support
+  <https://opensearch.org/docs/latest/ml-commons-plugin/>
+
+# Tooling for OpenSearch
 
 - JSON REST API running on port 9200
 - OpenSearch Dashboard
