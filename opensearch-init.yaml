@@ -127,13 +127,13 @@ write_files:
           echo "Reading data from standard input"
           curl -k --user admin:admin \
             -H "Content-Type: ${CONTENT_TYPE}" \
-            -X "${METHOD}"
-            -d @-
+            -X "${METHOD}" \
+            -d @- \
             "https://localhost:9200/$URL_PATH" | jq .
           ;;
           *)
           curl -k --user admin:admin \
-            -X "${METHOD}"
+            -X "${METHOD}" \
             -H "Content-Type: ${CONTENT_TYPE}" \
             "https://localhost:9200/$URL_PATH" | jq .
       esac
@@ -320,3 +320,4 @@ packages:
   - libncurses5
   - libtinfo5
   - npm
+  - jq
