@@ -541,8 +541,8 @@ curl https://localhost:9200/_settings
 # About
 
 - Caltech Library Digital Library Development Group
-- <https://caltechlibrary.github.io/opensearch_machine>
-- <https://github.com/caltechlibrary/opensearch_machine>
-- Issues <https://github.com/caltechlibrary/opensearch_machine/issues>
+- <https://caltechlibrary.github.io/opensearch-machine>
+- <https://github.com/caltechlibrary/opensearch-machine>
+- Issues <https://github.com/caltechlibrary/opensearch-machine/issues>
 
 
