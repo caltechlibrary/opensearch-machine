@@ -35,6 +35,11 @@ git --version
 git clone https://github.com/caltechlibrary/opensearch-machine
 cd opensearch-machine
 make check_software
+~~~
+
+If you want a run a local copy of the website you can do so with
+
+~~~sh
 make website
 python3 -m http.server
 ~~~
