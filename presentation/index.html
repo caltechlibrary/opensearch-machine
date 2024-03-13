@@ -7,7 +7,7 @@
   <meta http-equiv="Content-Style-Type" content="text/css" />
   <meta name="generator" content="pandoc" />
   <meta name="author" content="R. S. Doiel, rsdoiel@caltech.edu" />
-  <meta name="keywords" content="search engine, opensearch" />
+  <meta name="keywords" content="search engine, OpenSearch" />
   <title>OpenSearch Machine</title>
   <style type="text/css">
     code{white-space: pre-wrap;}
@@ -129,7 +129,7 @@ OpenSearch using a Multipass managed virtual machine</h2>
 <div id="system-requirements-host-machine" class="slide section level1">
 <h1>System Requirements (Host machine)</h1>
 <ul>
-<li>macOS, Linix or Windows based machine (ARM or Intel CPU)</li>
+<li>macOS, Linux or Windows based machine (ARM or Intel CPU)</li>
 <li><a href="https://multipass.run">Multipass</a> needs to be
 installed</li>
 </ul>
@@ -147,10 +147,10 @@ class="slide section level1">
 class="slide section level1">
 <h1>What we’ll be doing (host and virtual machine)</h1>
 <ul>
-<li>Running programs “terminal” or multipass “shell”</li>
+<li>Running programs “terminal” or Multipass “shell”</li>
 <li>using a program called <code>curl</code> to interact with
 OpenSearch</li>
-<li>using <code>jq</code> to rangle unruley JSON strings</li>
+<li>using <code>jq</code> to wrangle unruly JSON strings</li>
 <li>light text editing, to script the longer commands</li>
 </ul>
 </div>
@@ -186,7 +186,7 @@ setting things up</li>
 <h1>Part II: Working with OpenSearch</h1>
 <p>We’ll be using …</p>
 <ul>
-<li><a href="https://curl.se">curl</a> (aka cURL)</li>
+<li><a href="https://curl.se">curl</a> (aka curl)</li>
 <li><a href="https://jqlang.github.io">jq</a></li>
 <li>Sysadmin command <code>sudo systemctl ...</code> to start/restart
 OpenSearch</li>
@@ -306,8 +306,8 @@ class="sourceCode json"><code class="sourceCode json"><span id="cb9-1"><a href="
 <span id="cb9-28"><a href="#cb9-28" tabindex="-1"></a>  <span class="fu">}</span></span>
 <span id="cb9-29"><a href="#cb9-29" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
 </div>
-<div id="retreiving-an-indexs-contents" class="slide section level1">
-<h1>Retreiving an index’s contents</h1>
+<div id="retrieving-an-indexs-contents" class="slide section level1">
+<h1>Retrieving an index’s contents</h1>
 <ul>
 <li>GET, <code>{INDEX_NAME}/_search</code></li>
 </ul>
@@ -497,7 +497,7 @@ class="slide section level1">
 <li>Creating mapping for new indexes</li>
 <li>Index documents</li>
 <li>Managing aliases of indexes</li>
-<li>Manage indexes (e.g. rollups of time series indexes)</li>
+<li>Manage indexes (e.g. roll ups of time series indexes)</li>
 <li>Providing search service</li>
 </ul>
 </div>
@@ -510,7 +510,7 @@ class="slide section level1">
 <ul>
 <li>elasticdump (NodeJS/NPM)</li>
 <li>curator (Python)</li>
-<li>cURL, Httpie</li>
+<li>curl, Httpie</li>
 </ul></li>
 </ul>
 </div>
@@ -573,9 +573,9 @@ class="uri">https://opensearch.org/docs/latest/api-reference/index-apis/create-i
 <li>GET <code>_index_mapping</code></li>
 </ul>
 </div>
-<div id="retreiving-the-contents-of-an-index"
+<div id="retrieving-the-contents-of-an-index"
 class="slide section level1">
-<h1>Retreiving the contents of an index</h1>
+<h1>Retrieving the contents of an index</h1>
 <ul>
 <li>GET <code>_search</code></li>
 <li>Search for everything</li>
@@ -640,10 +640,10 @@ class="slide section level1">
 <li>Invenio RDM now uses OpenSearch</li>
 </ul>
 </div>
-<div id="opensearch-vs-elasticserch" class="slide section level1">
-<h1>OpenSearch vs Elasticserch</h1>
+<div id="opensearch-vs-elasticsearch" class="slide section level1">
+<h1>OpenSearch vs Elasticsearch</h1>
 <ul>
-<li>Documentaiton for Elasticsearch largely applies to OpenSearch</li>
+<li>Documentation for Elasticsearch largely applies to OpenSearch</li>
 <li>Tooling right now is common between the two (e.g. elasticdump)</li>
 <li>OpenSearch documentation looks shiny but isn’t that helpful</li>
 <li>RDM’s documentation of OpenSearch is a better place to start</li>
@@ -657,7 +657,7 @@ class="slide section level1">
 Co.</li>
 <li>When Elasticsearch was created Solr had stagnated and was XML
 only</li>
-<li>Solr/Elasticsearch/OpenSearch are functionally equivallent but their
+<li>Solr/Elasticsearch/OpenSearch are functionally equivalent but their
 API are different</li>
 </ul>
 </div>

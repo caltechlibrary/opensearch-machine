@@ -39,7 +39,7 @@ OpenSearch using a Multipass managed virtual machine</h2>
 <h1 id="system-requirements-host-machine">System Requirements (Host
 machine)</h1>
 <ul>
-<li>macOS, Linix or Windows based machine (ARM or Intel CPU)</li>
+<li>macOS, Linux or Windows based machine (ARM or Intel CPU)</li>
 <li><a href="https://multipass.run">Multipass</a> needs to be
 installed</li>
 </ul>
@@ -53,10 +53,10 @@ machine)</h1>
 <h1 id="what-well-be-doing-host-and-virtual-machine">What we’ll be doing
 (host and virtual machine)</h1>
 <ul>
-<li>Running programs “terminal” or multipass “shell”</li>
+<li>Running programs “terminal” or Multipass “shell”</li>
 <li>using a program called <code>curl</code> to interact with
 OpenSearch</li>
-<li>using <code>jq</code> to rangle unruley JSON strings</li>
+<li>using <code>jq</code> to wrangle unruly JSON strings</li>
 <li>light text editing, to script the longer commands</li>
 </ul>
 <h1 id="before-you-start">Before you start</h1>
@@ -86,7 +86,7 @@ setting things up</li>
 OpenSearch</h1>
 <p>We’ll be using …</p>
 <ul>
-<li><a href="https://curl.se">curl</a> (aka cURL)</li>
+<li><a href="https://curl.se">curl</a> (aka curl)</li>
 <li><a href="https://jqlang.github.io">jq</a></li>
 <li>Sysadmin command <code>sudo systemctl ...</code> to start/restart
 OpenSearch</li>
@@ -188,7 +188,7 @@ class="sourceCode json"><code class="sourceCode json"><span id="cb9-1"><a href="
 <span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>    <span class="ot">]</span></span>
 <span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
 <span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
-<h1 id="retreiving-an-indexs-contents">Retreiving an index’s
+<h1 id="retrieving-an-indexs-contents">Retrieving an index’s
 contents</h1>
 <ul>
 <li>GET, <code>{INDEX_NAME}/_search</code></li>
@@ -354,7 +354,7 @@ mapping</h1>
 <li>Creating mapping for new indexes</li>
 <li>Index documents</li>
 <li>Managing aliases of indexes</li>
-<li>Manage indexes (e.g. rollups of time series indexes)</li>
+<li>Manage indexes (e.g. roll ups of time series indexes)</li>
 <li>Providing search service</li>
 </ul>
 <h1 id="managing-opensearch">Managing OpenSearch</h1>
@@ -365,7 +365,7 @@ mapping</h1>
 <ul>
 <li>elasticdump (NodeJS/NPM)</li>
 <li>curator (Python)</li>
-<li>cURL, Httpie</li>
+<li>curl, Httpie</li>
 </ul></li>
 </ul>
 <h1 id="some-json-api-end-points">Some JSON API end points</h1>
@@ -412,7 +412,7 @@ map</h1>
 <ul>
 <li>GET <code>_index_mapping</code></li>
 </ul>
-<h1 id="retreiving-the-contents-of-an-index">Retreiving the contents of
+<h1 id="retrieving-the-contents-of-an-index">Retrieving the contents of
 an index</h1>
 <ul>
 <li>GET <code>_search</code></li>
@@ -463,9 +463,9 @@ Elasticsearch vs. Solr.</h1>
 <li>Invenio RDM started out with Elasticsearch</li>
 <li>Invenio RDM now uses OpenSearch</li>
 </ul>
-<h1 id="opensearch-vs-elasticserch">OpenSearch vs Elasticserch</h1>
+<h1 id="opensearch-vs-elasticsearch">OpenSearch vs Elasticsearch</h1>
 <ul>
-<li>Documentaiton for Elasticsearch largely applies to OpenSearch</li>
+<li>Documentation for Elasticsearch largely applies to OpenSearch</li>
 <li>Tooling right now is common between the two (e.g. elasticdump)</li>
 <li>OpenSearch documentation looks shiny but isn’t that helpful</li>
 <li>RDM’s documentation of OpenSearch is a better place to start</li>
@@ -477,7 +477,7 @@ Elasticsearch vs. Solr.</h1>
 Co.</li>
 <li>When Elasticsearch was created Solr had stagnated and was XML
 only</li>
-<li>Solr/Elasticsearch/OpenSearch are functionally equivallent but their
+<li>Solr/Elasticsearch/OpenSearch are functionally equivalent but their
 API are different</li>
 </ul>
 <h1 id="opensearch-1">OpenSearch</h1>

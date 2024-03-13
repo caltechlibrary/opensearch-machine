@@ -15,7 +15,7 @@ updateDate: 2024-03-08
 #date: TBF
 section-titles: false
 toc: true
-keywords: [ "search engine", "opensearch" ]
+keywords: [ "search engine", "OpenSearch" ]
 url: "https://caltechlibrary.github.io/opensearch_machine/blob/main/presentation.md"
 ---
 
@@ -32,7 +32,7 @@ url: "https://caltechlibrary.github.io/opensearch_machine/blob/main/presentation
 
 # System Requirements (Host machine)
 
-- macOS, Linix or Windows based machine (ARM or Intel CPU)
+- macOS, Linux or Windows based machine (ARM or Intel CPU)
 - [Multipass](https://multipass.run) needs to be installed
 
 # Software Requirements (Host machine)
@@ -43,9 +43,9 @@ url: "https://caltechlibrary.github.io/opensearch_machine/blob/main/presentation
 
 # What we'll be doing (host and virtual machine)
 
-- Running programs "terminal" or multipass "shell"
+- Running programs "terminal" or Multipass "shell"
 - using a program called `curl` to interact with OpenSearch
-- using `jq` to rangle unruley JSON strings
+- using `jq` to wrangle unruly JSON strings
 - light text editing, to script the longer commands
 
 # Before you start
@@ -70,7 +70,7 @@ url: "https://caltechlibrary.github.io/opensearch_machine/blob/main/presentation
 
 We'll be using ...
 
-- [curl](https://curl.se) (aka cURL)
+- [curl](https://curl.se) (aka curl)
 - [jq](https://jqlang.github.io)
 - Sysadmin command `sudo systemctl ...` to start/restart OpenSearch
 
@@ -205,7 +205,7 @@ But we have `jq` to help us out.
 }
 ~~~
 
-# Retreiving an index's contents
+# Retrieving an index's contents
 
 - GET, `{INDEX_NAME}/_search`
 
@@ -413,7 +413,7 @@ curl https://localhost:9200/{INDEX_NAME}/_mapping?pretty=true
 - Creating mapping for new indexes
 - Index documents
 - Managing aliases of indexes
-- Manage indexes (e.g. rollups of time series indexes)
+- Manage indexes (e.g. roll ups of time series indexes)
 - Providing search service
 
 # Managing OpenSearch
@@ -423,7 +423,7 @@ curl https://localhost:9200/{INDEX_NAME}/_mapping?pretty=true
 - 3rd party tooling
   - elasticdump (NodeJS/NPM)
   - curator (Python)
-  - cURL, Httpie
+  - curl, Httpie
 
 # Some JSON API end points
 
@@ -470,7 +470,7 @@ curl https://localhost:9200/_settings
 
 - GET `_index_mapping`
 
-# Retreiving the contents of an index
+# Retrieving the contents of an index
 
 - GET `_search`
 - Search for everything
@@ -514,9 +514,9 @@ curl https://localhost:9200/_settings
 - Invenio RDM started out with Elasticsearch
 - Invenio RDM now uses OpenSearch
 
-# OpenSearch vs Elasticserch
+# OpenSearch vs Elasticsearch
 
-- Documentaiton for Elasticsearch largely applies to OpenSearch
+- Documentation for Elasticsearch largely applies to OpenSearch
 - Tooling right now is common between the two (e.g. elasticdump)
 - OpenSearch documentation looks shiny but isn't that helpful
 - RDM's documentation of OpenSearch is a better place to start
@@ -526,7 +526,7 @@ curl https://localhost:9200/_settings
 - OpenSearch is Amazon's fork of Elasticsearch
 - Amazon wants all the support income and is cutting out Elasticsearch Co.
 - When Elasticsearch was created Solr had stagnated and was XML only
-- Solr/Elasticsearch/OpenSearch are functionally equivallent but their API are different
+- Solr/Elasticsearch/OpenSearch are functionally equivalent but their API are different
 
 # OpenSearch
 
