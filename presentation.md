@@ -35,7 +35,7 @@ Exploring OpenSearch v2.5.0 using a Multipass managed virtual machine
 - macOS, Linux or Windows based machine (ARM or Intel CPU)
 - [Multipass](https://multipass.run) needs to be installed
 
-# Software Requirements (Host machine)
+# Software Requirements (Virtual machine)
 
 - [curl](https://curl.se)
 - [jq](https://jqlang.github.io/jq/)
@@ -63,6 +63,7 @@ Exploring OpenSearch v2.5.0 using a Multipass managed virtual machine
 1. Run `01-setup-scripts.bash`
 2. Run `07-add-opensearch.bash`
 3. Source the updated `.bashrc` file.
+4. Reboot your virtual machine
 
 > Now we're ready to start working with OpenSearch
 
@@ -74,7 +75,7 @@ We'll be using ...
 
 - [curl](https://curl.se) (aka curl)
 - [jq](https://jqlang.github.io)
-- Sysadmin command `sudo systemctl ...` to start/restart OpenSearch
+- "`sudo systemctl`" to start/restart/status OpenSearch
 
 # Make sure OpenSearch us up and running healthy
 
@@ -95,22 +96,6 @@ curl -k --user admin:admin \
 
 This should return JSON which shows the settings of our OpenSearch
 installation.
-
-# A message form our sponsor
-
-## save yourself some typing with `os_client.bash`
-
-With this Multipass VM you'll find a simple OpenSearch client written
-in Bash that uses the curl method discussed in this presentation.
-
-Feel free to use it to follow along. If can be found at
-`/usr/local/bin/os_client.bash`. You can run it with
-
-~~~
-os_client.bash
-~~~
-
-If you do not include any options it will display a help page.
 
 # Creating our first index
 
@@ -472,7 +457,7 @@ env NODE_TLS_REJECT_UNAUTHORIZED=0 elasticdump \
 
 - Basic interactions of OpenSearch REST API
 - Basic management actions
-  - create, read, update, delete, list, restore
+  - create, read, search, update, delete
 - Backup and restore with `elasticdump`
 
 ------------------
