@@ -41,6 +41,7 @@ repository you need the following available.</p>
 <li>PageFind 1.0.4 or better (used to provide static site search)</li>
 <li>Python 3.x or better (provides an easy way to run a “localhost” web
 server)</li>
+<li>jq 1.7 or better for wrangle JSON</li>
 <li>A web browser (e.g. Firefox)</li>
 <li>A plain text editor (e..g VS Code, vi, emacs, nano, micro)</li>
 </ul>
@@ -53,14 +54,17 @@ repository contents</h2>
 <li>Start up a localhost web service</li>
 <li>Check with a web browser to see how it looks</li>
 </ol>
-<p>Here’s the command I run to get things going.</p>
+<p>Here’s the command I run to get things going with a Multipass VM and
+OpenSearch v2.5.0.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> <span class="at">--version</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Make sure I have a recent git available.</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/caltechlibrary/opensearch-machine</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> opensearch-machine</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> check_software</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> website</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">-m</span> http.server</span></code></pre></div>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="ex">./opensearch_machine.bash</span></span></code></pre></div>
+<p>If you want a run a local copy of the website you can do so with</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> website</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">-m</span> http.server</span></code></pre></div>
 <p>At this point I can point my web browser at <a
 href="http://localhost:8000" class="uri">http://localhost:8000</a> and
 see the website.</p>

@@ -16,6 +16,7 @@ available.
 - Pandoc 3.1 or better
 - PageFind 1.0.4 or better (used to provide static site search)
 - Python 3.x or better (provides an easy way to run a "localhost" web server)
+- jq 1.7 or better for wrangle JSON
 - A web browser (e.g. Firefox)
 - A plain text editor (e..g VS Code, vi, emacs, nano, micro)
 
@@ -27,7 +28,8 @@ available.
 4. Start up a localhost web service
 5. Check with a web browser to see how it looks
 
-Here's the command I run to get things going.
+Here's the command I run to get things going with a Multipass VM
+and OpenSearch v2.5.0.
 
 ~~~sh
 git --version
@@ -35,6 +37,7 @@ git --version
 git clone https://github.com/caltechlibrary/opensearch-machine
 cd opensearch-machine
 make check_software
+./opensearch_machine.bash
 ~~~
 
 If you want a run a local copy of the website you can do so with

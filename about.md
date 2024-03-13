@@ -11,7 +11,7 @@ authors:
     orcid: "https://orcid.org/0000-0003-0900-6903"
 
 repository-code: "https://github.com/caltechlibrary/opensearch-machine"
-version: 0.0.1
+version: 0.0.2
 license-url: "https://github.com/caltechlibrary/opensearch-machine/blob/main/LICENSE"
 keywords: [ "OpenSearch", "search engine", "virtual machine" ]
 
@@ -20,7 +20,7 @@ keywords: [ "OpenSearch", "search engine", "virtual machine" ]
 About this software
 ===================
 
-## Opensearch Machine 0.0.1
+## Opensearch Machine 0.0.2
 
 ### Authors
 

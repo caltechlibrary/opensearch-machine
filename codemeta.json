@@ -4,7 +4,7 @@
   "name": "Opensearch Machine",
   "identifier": "opensearch-machine",
   "description": "A Multipass virtual machine setup for learning and exploring OpenSearch",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "dateCreated": "2024-03-07",
   "dateModified": "2024-03-12",
   "dateReleased": "2024-03-13",

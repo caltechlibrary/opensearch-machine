@@ -12,6 +12,6 @@ authors:
 
 
 repository-code: "https://github.com/caltechlibrary/opensearch-machine"
-version: 0.0.1
+version: 0.0.2
 license-url: "https://github.com/caltechlibrary/opensearch-machine/blob/main/LICENSE"
 keywords: [ "OpenSearch", "search engine", "virtual machine" ]
