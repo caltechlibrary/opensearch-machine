@@ -23,15 +23,18 @@ function check_version() {
 # Check the OS distribution supplied tools
 #
 echo ""
-echo "Checking Bash, GNU Make, Pandoc, PageFind, Python3 and Multipass"
+echo "Checking Bash and Multipass to run OpenSearch in a VM"
 echo ""
 ## - Bash >= 3.2 (or equivalent POSIX shell)
 check_version "--version" "3.2" "bash" ""
 ## - Multipass >= 1.13
 check_version "--version" "1.13" "multipass"  ", see <https://multipass.run> to install"
 
-echo "You have enough to run the Multipass VM and install OpenSearch"
+echo "You can opensearch_machine.bash, the Multipass VM, and install OpenSearch!"
 
+echo ""
+echo "Checking GNU Make, Pandoc, PageFind, Python3 and jq"
+echo ""
 ## - GNU Make
 check_version "--version" "3.8" "make" ""
 ## - Pandoc >= 3.1
