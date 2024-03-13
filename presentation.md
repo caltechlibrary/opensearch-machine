@@ -19,34 +19,34 @@ keywords: [ "search engine", "opensearch" ]
 url: "https://caltechlibrary.github.io/opensearch_machine/blob/main/presentation.md"
 ---
 
-# OpenSearch Machine
+# Part I: OpenSearch Machine
 
-## Learning and exploring OpenSearch using a Multipass managed virtual machine
+## Exploring OpenSearch using a Multipass managed virtual machine
 
 # Knowledge requirements
 
 - You need to comfortable with working on the command line
 - General understanding of how the web works
-    - HTTP, HTTP methods (e.g. GET, POST)
-    - HTML and JSON documents
+    - HTTP, HTTP methods (e.g. GET, POST, PUT, DELETE)
+    - JSON documents
 
 # System Requirements (Host machine)
 
 - macOS, Linix or Windows based machine (ARM or Intel CPU)
-- [Multipass](https://multipass.run)
+- [Multipass](https://multipass.run) needs to be installed
 
 # Software Requirements (Host machine)
 
-- Web browser (e.g. Firefox)
-- [cURL](https://curl.se)
-- A plain text editor
+- [curl](https://curl.se)
+- [jq](https://jqlang.github.io/jq/)
+- A plain text editor is nice
 
 # What we'll be doing (host and virtual machine)
 
-- Running programs "terminal" or "shell"
-- using a program called `curl` to work with OpenSearch
-- using a web browser
-- light text editing
+- Running programs "terminal" or multipass "shell"
+- using a program called `curl` to interact with OpenSearch
+- using `jq` to rangle unruley JSON strings
+- light text editing, to script the longer commands
 
 # Before you start
 
@@ -58,61 +58,443 @@ url: "https://caltechlibrary.github.io/opensearch_machine/blob/main/presentation
 1. Run `./opensearch_machine.bash` to create the `opensearch_machine` virtual machine
 2. Run `multipass shell opensearch_machine` to finish setting things up
 
-# On, opensearch_machine
+# On, the `opensearch-machine` VM
 
 1. Run `01-setup-scripts.bash`
 2. Run `07-add-opensearch.bash`
 3. Source the updated `.bashrc` file.
 
-# On your host machine
-
-1. Use `multipass info opensearch_machine` to find the IP address of the virtual machine
-2. Point your web browser at virtual machine using the port number for OpenSearch REST API or Dashboard.
-
 > Now we're ready to start working with OpenSearch
 
-# Checking our configuration
+# Part II: Working with OpenSearch
 
-- GET, "_settings"
+We'll be using ...
+
+- [curl](https://curl.se) (aka cURL)
+- [jq](https://jqlang.github.io)
+- Sysadmin command `sudo systemctl ...` to start/restart OpenSearch
+
+# Make sure OpenSearch us up and running healthy
+
+~~~shell
+sudo systemctl status opensearch.service
+~~~
+
+# Exploring OpenSearch
+
+Check to see how OpenSearch is currently configured.
+By default OpenSearch runs on https (self signed certs)
+and requires "admin" account to access.
+
+~~~shell
+curl -k --user admin:admin \
+  https://localhost:9200/_settings?pretty
+~~~
+
+This should return JSON which shows the settings of our OpenSearch
+installation.
+
+# A message form our sponsor
+
+## save yourself some typing with `os_client.bash`
+
+With this Multipass VM you'll find a simple OpenSearch client written
+in Bash that uses the curl method discussed in this presentation.
+
+Feel free to use it to follow along. If can be found at
+`/usr/local/bin/os_client.bash`. You can run it with
 
 ~~~
-curl http://localhost:9200/_settings
+os_client.bash
 ~~~
 
-# Mapping an index
+If you do not include any options it will display a help page.
 
-- POST, `_index_mapping`
 
-# Adding a document to the index
+# Creating our first index
 
-- POST, `{INDEX_NAME}`
+- PUT, "{INDEX_NAME}"
+- "{INDEX_NAME}" = 'contact-list'
 
-# Retrieving the index map
+~~~shell
+curl -k --user admin:admin \
+  https://localhost:9200/contact-list?pretty
+~~~
 
-- GET, `_index_mapping`
+# Creating a document in our index
 
-# Retreiving index contents
+- POST, "{INDEX_NAME}/_doc/{DOC_ID}"
 
-- GET, `_search`
-- Loop through results 
+~~~shell
+curl -k --user admin:admin \
+  --data '{"name": "Robert", "email": "rsdoiel@caltech.edu", "orcid": "0000-0003-0900-6903"}' \
+  https://localhost:9200/contact-list/_doc/0000-0003-0900-6903?pretty
+~~~
+
+# Reading back our document
+
+- GET, "{INDEX_NAME}/_doc/{DOC_ID}"
+
+~~~shell
+curl -k --user admin:admin \
+  https://localhost:9200/contact-list/_doc/0000-0003-0900-6903?pretty
+~~~
+
+# Read document response
+
+~~~json
+{
+  "_index" : "contact-list",
+  "_id" : "0000-0003-0900-6903",
+  "_version" : 1,
+  "_seq_no" : 0,
+  "_primary_term" : 1,
+  "found" : true,
+  "_source" : {
+    "name" : "Robert",
+    "email" : "rsdoiel@caltech.edu",
+    "orcid" : "0000-0003-0900-6903"
+  }
+}
+~~~
+
+# Searching for our document
+
+- GET, `{INDEX_NAME}/_search?q=robert`
+
+~~~shell
+curl -k --user admin:admin \
+  https://localhost:9200/contact-list/_search?q=robert \
+  jq .
+~~~
+
+NOTE: The `?pretty` option doesn't work on `_search` queries. That's pretty sad IMO.
+But we have `jq` to help us out.
+
+# Search results
+
+~~~json
+{
+  "took": 5,
+  "timed_out": false,
+  "_shards": {
+    "total": 1,
+    "successful": 1,
+    "skipped": 0,
+    "failed": 0
+  },
+  "hits": {
+    "total": {
+      "value": 1,
+      "relation": "eq"
+    },
+    "max_score": 0.2876821,
+    "hits": [
+      {
+        "_index": "contact-list",
+        "_id": "0000-0003-0900-6903",
+        "_score": 0.2876821,
+        "_source": {
+          "name": "Robert",
+          "email": "rsdoiel@caltech.edu",
+          "orcid": "0000-0003-0900-6903"
+        }
+      }
+    ]
+  }
+}
+~~~
+
+# Retreiving an index's contents
+
+- GET, `{INDEX_NAME}/_search`
+
+~~~shell
+curl -k --user admin:admin -X GET https://localhost:9200/contact-list/_search?pretty
+~~~
+
+NOTE: When you get lots of results (more than one "page") you can
+iterate over the pages. If you collect the ids you can then retrieve the documents
+
+# The retrieved index's response
+
+~~~json
+{
+  "took" : 3,
+  "timed_out" : false,
+  "_shards" : {
+    "total" : 1,
+    "successful" : 1,
+    "skipped" : 0,
+    "failed" : 0
+  },
+  "hits" : {
+    "total" : {
+      "value" : 1,
+      "relation" : "eq"
+    },
+    "max_score" : 1.0,
+    "hits" : [
+      {
+        "_index" : "contact-list",
+        "_id" : "0000-0003-0900-6903",
+        "_score" : 1.0,
+        "_source" : {
+          "name" : "Robert",
+          "email" : "rsdoiel@caltech.edu",
+          "orcid" : "0000-0003-0900-6903"
+        }
+      }
+    ]
+  }
+}
+~~~
+
+# Retrieving the specific document with an `_id`
+
+~~~shell
+curl -k --user admin:admin \
+  https://localhost:9200/contact-list/_doc/0000-0003-0900-6903?pretty
+~~~
+
+And the response:
+
+~~~json
+{
+  "_index" : "contact-list",
+  "_id" : "0000-0003-0900-6903",
+  "_version" : 1,
+  "_seq_no" : 3,
+  "_primary_term" : 1,
+  "found" : true,
+  "_source" : {
+    "name" : "Robert",
+    "email" : "rsdoiel@caltech.edu",
+    "orcid" : "0000-0003-0900-6903"
+  }
+}
+~~~
 
 # Updating an index document
 
-- POST, `{INDEX_NAME}`
+- POST, `{INDEX_NAME}/_doc/{DOC_ID}`
+
+In update, I will add a website field.
+
+~~~shell
+curl -k --user admin:admin \
+  -H 'Content-Type: application/json' \
+  --data '{"name":"Robert","email":"rsdoiel@caltech.edu","orcid":"0000-0003-0900-6903","url":"https://rsdoiel.github.io"}' \
+  -X POST https://localhost:9200/contact-list/_doc/0000-0003-0900-6903?pretty
+~~~
+
+# Update response
+
+~~~json
+{
+  "_index" : "contact-list",
+  "_id" : "0000-0003-0900-6903",
+  "_version" : 2,
+  "result" : "updated",
+  "_shards" : {
+    "total" : 2,
+    "successful" : 1,
+    "failed" : 0
+  },
+  "_seq_no" : 4,
+  "_primary_term" : 1
+}
+~~~
 
 # Dropping document
 
+- DELETE, `{INDEX_NAME}/_doc/{DOC_ID}`
+
+~~~shell
+curl -k --user admin:admin \
+  -X DELETE https://localhost:9200/contact-list/_doc/0000-0003-0900-6903?pretty
+~~~
+
+# Dropping document response
+
+~~~json
+{
+	"_index":"contact-list",
+	"_id":"0000-0003-0900-6903",
+	"_version":2,
+	"result":"deleted",
+	"_shards":{
+		"total":2,
+		"successful":1,
+		"failed":0
+	},
+	"_seq_no":1,
+	"_primary_term":1
+}
+~~~
+
+# Dumping our index with elasticdump
+
+<https://inveniordm.docs.cern.ch/develop/howtos/backup_search_indices/#elasticdump>
+
+For index mappings:
+
+~~~shell
+env NODE_TLS_REJECT_UNAUTHORIZED=0 elasticdump \    
+   --input https://admin:admin@localhost:9200/contact-list \
+   --output contact-list.mappings.json \
+   --type mapping
+~~~
+
+For index data:
+
+~~~shell
+env NODE_TLS_REJECT_UNAUTHORIZED=0 elasticdump \    
+   --input https://admin:admin@localhost:9200/contact-list \
+   --output contact-list.data.json \
+   --type data
+~~~
+
 # Dropping an index
 
-# Restoring an index
+- DELETE, `{INDEX_NAME}`
 
-# What we've learned
+~~~shell
+curl -k --user admin:admin \
+  -X DELETE https://localhost:9200/contact-list
+~~~
+
+# Restoring an index with elasticdump
+
+For index mapping:
+
+~~~shell
+env NODE_TLS_REJECT_UNAUTHORIZED=0 elasticdump \    
+   --input contact-list.mappings.json \
+   --oputput https://admin:admin@localhost:9200/contact-list \
+   --type mapping
+~~~
+
+For index data:
+
+~~~shell
+env NODE_TLS_REJECT_UNAUTHORIZED=0 elasticdump \    
+   --input contact-list.data.json \
+   --oputput https://admin:admin@localhost:9200/contact-list \
+   --type data
+~~~
+
+# What we've learned so far
 
 - Basic interactions of OpenSearch REST API
 - Basic management actions
   - create, read, update, delete, list, restore
+- Backup and restore with `elasticdump`
 
-# What is OpenSearch?
+Can we do better???
+
+# Part: III, improving our indexes
+
+- Index mapping
+- Aggregations
+
+# Creating our first index map
+
+# Retrieving our index's mapping
+
+- GET, '{INDEX_NAME}/_mapping'
+
+~~~
+curl https://localhost:9200/{INDEX_NAME}/_mapping?pretty=true
+~~~
+
+# Basic management activities
+
+- Creating mapping for new indexes
+- Index documents
+- Managing aliases of indexes
+- Manage indexes (e.g. rollups of time series indexes)
+- Providing search service
+
+# Managing OpenSearch
+
+- JSON REST API running on port 9200
+- A "dashboard" web service
+- 3rd party tooling
+  - elasticdump (NodeJS/NPM)
+  - curator (Python)
+  - cURL, Httpie
+
+# Some JSON API end points
+
+- `_settings`
+- `_aliases`
+- `_search`
+- `_mapping`
+- `_source`
+- `_doc`
+
+# What is an index?
+
+- A searchable data structure for full text structured documents
+- A collection "documents" expressed as JSON
+
+# What does my OpenSearch engine manage?
+
+- Retrieve the `_settings` JSON document with get
+
+~~~shell
+curl https://localhost:9200/_settings
+~~~
+
+# Creating a new index
+
+<https://opensearch.org/docs/latest/api-reference/index-apis/create-index/>
+
+- PUT `<index-name>`
+
+
+# Creating a new index map
+
+- POST of JSON document of mapping into REST API
+
+# Populating our index
+
+- POST to ...
+
+# Testing our index
+
+- GET `_search`
+
+# Retrieving our current index map
+
+- GET `_index_mapping`
+
+# Retreiving the contents of an index
+
+- GET `_search`
+- Search for everything
+- Loop through all results
+
+# Backups for RDM
+
+- TBD
+
+# What is index aliasing?
+
+- TBD
+
+# Creating index aliases
+
+- TBD
+
+# Backing up indexes
+
+- TBD
+
+# Part III: Postscript
+
+## What is OpenSearch?
 
 - A fork of Elasticsearch
 - A full text search engine based on Apache Lucene (like Solr)
@@ -152,84 +534,6 @@ curl http://localhost:9200/_settings
 - Who knows what tomorrow may bring?
   - At some point Amazon will embrace and extend
   
-# Basic management activities
-
-- Creating mapping for new indexes
-- Index documents
-- Managing aliases of indexes
-- Manage indexes (e.g. rollups of time series indexes)
-- Providing search service
-
-# Managing OpenSearch
-
-- JSON REST API running on port 9200
-- A "dashboard" web service
-- 3rd party tooling
-  - elasticdump (NodeJS/NPM)
-  - curator (Python)
-  - cURL, Httpie
-
-# JSON API end points
-
-- `_settings`
-- `_index_aliases`
-- `_search`
-- `_mapping`
-
-# What is an index?
-
-- A searchable data structure for full text structured documents
-- A collection "documents" expressed as JSON
-
-# What does my OpenSearch engine manage?
-
-- Retrieve the `_settings` JSON document with get
-
-~~~shell
-curl http://localhost:9200/_settings
-~~~
-
-# Creating a new index
-
-- POST of JSON document into REST API
-
-# Creating a new index map
-
-- POST of JSON document of mapping into REST API
-
-# Populating our index
-
-- POST to ...
-
-# Testing our index
-
-- GET `_search`
-
-# Retrieving our current index map
-
-- GET `_index_mapping`
-
-# Retreiving the contents of an index
-
-- GET `_search`
-- Search for everything
-- Loop through all results
-
-# Backups for RDM
-- TBD
-
-# What is index aliasing?
-
-- TBD
-
-# Creating index aliases
-
-- TBD
-
-# Backing up indexes
-
-- TBD
-
 # In conclusion
 
 - Thank you!

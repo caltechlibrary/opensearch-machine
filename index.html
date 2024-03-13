@@ -23,14 +23,14 @@
 </nav>
 
 <section>
-<h1 id="opensearch-machine">Opensearch Machine</h1>
+<h1 id="opensearch-machine">OpenSearch Machine</h1>
 <p>This repository contains instructions for setting up a <a
 href="https://multipass.run">Multipass</a> managed virtual machine for
-learning and experimentation Opensearch. Multipass runs on macOS,
-Windows and Linux. It provides an Ubuntu Linux machine. Opensearch while
-written in Java is tailored to run under a Linux environment. Opensearch
+learning and experimentation OpenSearch. Multipass runs on macOS,
+Windows and Linux. It provides an Ubuntu Linux machine. OpenSearch while
+written in Java is tailored to run under a Linux environment. OpenSearch
 is a full text search engine based on a forked implementation of
-Elasticsearch full text search engine. Opensearch is the search engine
+Elasticsearch full text search engine. OpenSearch is the search engine
 used in Invenio-RDM.</p>
 <p><a
 href="https://github.com/caltechlibrary/opensearch-machine/blob/main/LICENSE"><img
@@ -54,8 +54,8 @@ limitations</a></li>
 </ul>
 <h2 id="introduction">Introduction</h2>
 <p>This repository is focused on creating a Multipass virtual machine
-for learning and exploring Opensearch. It includes brief instructions
-for installation of Opensearch and Opensearch Dashboard running under a
+for learning and exploring OpenSearch. It includes brief instructions
+for installation of OpenSearch and OpenSearch Dashboard running under a
 Multipass managed virtual machine. It includes documentation describing
 how to create a indexes, index aliases and backing up those indexes
 outside the virtual machine.</p>
@@ -75,7 +75,7 @@ machine</h3>
 user) run the following scripts.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">01-setup-scripts.bash</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">07-add-opensearch.bash</span></span></code></pre></div>
-<p>At this point you should have Opensearch and opensearch Dashboard
+<p>At this point you should have OpenSearch and OpenSearch Dashboard
 running in your virtual machine, ready to explore.</p>
 <h2 id="stopping-and-removing-your-virtual-machine">Stopping and
 removing your virtual machine</h2>
@@ -83,22 +83,22 @@ removing your virtual machine</h2>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">multipass</span> delete opensearch-machine</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="ex">multipass</span> purge</span></code></pre></div>
 <h2 id="usage">Usage</h2>
-<p>Once you have your virtual machine up and running with Opensearch and
-the Opensearch dashboard you should be able to access it from your host
-machine using SSH port mapping to interact with the Opensearch REST API
-and the Opensearch dashboard.</p>
+<p>Once you have your virtual machine up and running with OpenSearch and
+the OpenSearch dashboard you should be able to access it from your host
+machine using SSH port mapping to interact with the OpenSearch REST API
+and the OpenSearch dashboard.</p>
 <p>You can find out more about using Multipass to manage virtual
 machines at <a href="https://multipass.run"
 class="uri">https://multipass.run</a>. You can find out more about
-Opensearch and Opensearch Dashboard at <a
+OpenSearch and OpenSearch Dashboard at <a
 href="https://opensearch.org/docs/latest/about/"
 class="uri">https://opensearch.org/docs/latest/about/</a></p>
 <h2 id="known-issues-and-limitations">Known issues and limitations</h2>
-<p>These instructions focus on running Opensearch for the purpose of
+<p>These instructions focus on running OpenSearch for the purpose of
 learning and experimentation. It does not cover setup and configuration
-of running Opensearch in a production environment. There are many
+of running OpenSearch in a production environment. There are many
 additional considerations in that setting. Consult the <a
-href="https://opensearch.org">Opensearch</a> website and your system
+href="https://opensearch.org">OpenSearch</a> website and your system
 administrator(s) to explore those issues.</p>
 <h2 id="getting-help">Getting help</h2>
 <p>If you can questions, problems or suggestions regarding this

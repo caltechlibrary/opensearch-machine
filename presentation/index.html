@@ -7,8 +7,8 @@
   <meta http-equiv="Content-Style-Type" content="text/css" />
   <meta name="generator" content="pandoc" />
   <meta name="author" content="R. S. Doiel, rsdoiel@caltech.edu" />
-  <meta name="keywords" content="searching, opensearch" />
-  <title>Opensearch Machine</title>
+  <meta name="keywords" content="search engine, opensearch" />
+  <title>OpenSearch Machine</title>
   <style type="text/css">
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -25,6 +25,70 @@
       vertical-align: middle;
     }
     .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
   </style>
   <link rel="stylesheet" type="text/css" media="screen, projection, print"
     href="https://www.w3.org/Talks/Tools/Slidy2/styles/slidy.css" />
@@ -33,7 +97,7 @@
 </head>
 <body>
 <div class="slide titlepage">
-  <h1 class="title">Opensearch Machine</h1>
+  <h1 class="title">OpenSearch Machine</h1>
   <p class="author">
 R. S. Doiel, <a href="mailto:rsdoiel@caltech.edu"
 class="email">rsdoiel@caltech.edu</a>
@@ -45,11 +109,11 @@ class="email">rsdoiel@caltech.edu</a>
 <div class="slide" id="TOC">
 
 </div>
-<div id="opensearch-machine" class="slide section level1">
-<h1>Opensearch Machine</h1>
+<div id="part-i-opensearch-machine" class="slide section level1">
+<h1>Part I: OpenSearch Machine</h1>
 <h2
-id="learning-and-exploring-opensearch-using-a-multipass-managed-virtual-machine">Learning
-and exploring Opensearch using a Multipass managed virtual machine</h2>
+id="exploring-opensearch-using-a-multipass-managed-virtual-machine">Exploring
+OpenSearch using a Multipass managed virtual machine</h2>
 </div>
 <div id="knowledge-requirements" class="slide section level1">
 <h1>Knowledge requirements</h1>
@@ -57,8 +121,8 @@ and exploring Opensearch using a Multipass managed virtual machine</h2>
 <li>You need to comfortable with working on the command line</li>
 <li>General understanding of how the web works
 <ul>
-<li>HTTP, HTTP methods (e.g. GET, POST)</li>
-<li>HTML and JSON documents</li>
+<li>HTTP, HTTP methods (e.g. GET, POST, PUT, DELETE)</li>
+<li>JSON documents</li>
 </ul></li>
 </ul>
 </div>
@@ -66,27 +130,28 @@ and exploring Opensearch using a Multipass managed virtual machine</h2>
 <h1>System Requirements (Host machine)</h1>
 <ul>
 <li>macOS, Linix or Windows based machine (ARM or Intel CPU)</li>
-<li><a href="https://multipass.run">Multipass</a></li>
+<li><a href="https://multipass.run">Multipass</a> needs to be
+installed</li>
 </ul>
 </div>
 <div id="software-requirements-host-machine"
 class="slide section level1">
 <h1>Software Requirements (Host machine)</h1>
 <ul>
-<li>Web browser (e.g. Firefox)</li>
-<li><a href="https://curl.se">cURL</a></li>
-<li>A plain text editor</li>
+<li><a href="https://curl.se">curl</a></li>
+<li><a href="https://jqlang.github.io/jq/">jq</a></li>
+<li>A plain text editor is nice</li>
 </ul>
 </div>
 <div id="what-well-be-doing-host-and-virtual-machine"
 class="slide section level1">
 <h1>What we’ll be doing (host and virtual machine)</h1>
 <ul>
-<li>Running programs “terminal” or “shell”</li>
-<li>using a program called <code>curl</code> to work with
-Opensearch</li>
-<li>using a web browser</li>
-<li>light text editing</li>
+<li>Running programs “terminal” or multipass “shell”</li>
+<li>using a program called <code>curl</code> to interact with
+OpenSearch</li>
+<li>using <code>jq</code> to rangle unruley JSON strings</li>
+<li>light text editing, to script the longer commands</li>
 </ul>
 </div>
 <div id="before-you-start" class="slide section level1">
@@ -100,46 +165,468 @@ machine</li>
 <div id="getting-started" class="slide section level1">
 <h1>Getting started</h1>
 <ol style="list-style-type: decimal">
-<li>Run <code>./opensearch-machine.bash</code> to create the
-<code>opensearch-machine</code> virtual machine</li>
-<li>Run <code>multipass shell opensearch-machine</code> to finish
+<li>Run <code>./opensearch_machine.bash</code> to create the
+<code>opensearch_machine</code> virtual machine</li>
+<li>Run <code>multipass shell opensearch_machine</code> to finish
 setting things up</li>
 </ol>
 </div>
-<div id="on-opensearch-machine" class="slide section level1">
-<h1>On, opensearch-machine</h1>
+<div id="on-opensearch_machine" class="slide section level1">
+<h1>On, opensearch_machine</h1>
 <ol style="list-style-type: decimal">
 <li>Run <code>01-setup-scripts.bash</code></li>
 <li>Run <code>07-add-opensearch.bash</code></li>
 <li>Source the updated <code>.bashrc</code> file.</li>
 </ol>
-</div>
-<div id="on-your-host-machine" class="slide section level1">
-<h1>On your host machine</h1>
-<ol style="list-style-type: decimal">
-<li>Use <code>multipass info opensearch-machine</code> to find the IP
-address of the virtual machine</li>
-<li>Point your web browser at virtual machine using the port number for
-opensearch REST API or Dashboard.</li>
-</ol>
 <blockquote>
-<p>Now we’re ready to start working with Opensearch</p>
+<p>Now we’re ready to start working with OpenSearch</p>
 </blockquote>
+</div>
+<div id="part-ii-working-with-opensearch" class="slide section level1">
+<h1>Part II: Working with OpenSearch</h1>
+<p>We’ll be using …</p>
+<ul>
+<li>curl (aka cURL)</li>
+<li>jq</li>
+<li>sudo systemctl</li>
+</ul>
+</div>
+<div id="make-sure-opensearch-us-up-and-running-healthy"
+class="slide section level1">
+<h1>Make sure OpenSearch us up and running healthy</h1>
+<pre class="shell"><code>sudo systemctl status opensearch.service</code></pre>
+</div>
+<div id="exploring-opensearch" class="slide section level1">
+<h1>Exploring OpenSearch</h1>
+<p>Check to see how OpenSearch is currently configured. By default
+OpenSearch runs on https (self signed certs) and requires “admin”
+account to access.</p>
+<pre class="shell"><code>curl -k --user admin:admin \
+  https://localhost:9200/_settings?pretty</code></pre>
+<p>This should return JSON which shows the settings of our OpenSearch
+installation.</p>
+</div>
+<div
+id="quick-detour-well-make-a-quick-and-dirty-opensearch-client-in-bash"
+class="slide section level1">
+<h1>Quick detour, we’ll make a quick and dirty OpenSearch client in
+Bash</h1>
+<p>Here’s the client. It’ll take care of the lengthy command line
+options of curl and let you easily work with the JSON API by indicating
+a METHOD and URL path to use. For any data sent to the JSON API you can
+pipe in the contents of a file. This file can be called
+<code>os_client.bash</code></p>
+<pre class="shell"><code>#!/bin/bash
+METHOD=&quot;$1&quot;
+URL_PATH=&quot;$2&quot;
+CONTENT_TYPE=&quot;application/json&quot;
+
+case &quot;${METHOD}&quot; in
+    put|PUT|post|POST)
+    echo &quot;Reading data from standard input&quot;
+    curl -k --user admin:admin \
+      -H &quot;Content-Type: ${CONTENT_TYPE}&quot; \
+      -X &quot;${METHOD}&quot;
+      -d @-
+      &quot;https://localhost:9200/$URL_PATH&quot; | jq .
+    ;;
+    *)
+    curl -k --user admin:admin \
+      -X &quot;${METHOD}&quot;
+      -H &quot;Content-Type: ${CONTENT_TYPE}&quot; \
+      &quot;https://localhost:9200/$URL_PATH&quot; | jq .
+esac</code></pre>
+<p>After you save this file do <code>chmod 775 os_client.bash</code> to
+make it executable.</p>
+</div>
+<div id="create-a-simple-opensearch-client-in-bash"
+class="slide section level1">
+<h1>Create a simple OpenSearch client in Bash</h1>
+<p>Copy and paste this into a text file called “os_client.bash”</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="va">METHOD</span><span class="op">=</span><span class="st">&quot;</span><span class="va">$1</span><span class="st">&quot;</span></span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="va">URL_PATH</span><span class="op">=</span><span class="st">&quot;</span><span class="va">$2</span><span class="st">&quot;</span></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="va">DATA</span><span class="op">=</span><span class="st">&quot;</span><span class="va">$3</span><span class="st">&quot;</span></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="va">CONTENT_TYPE</span><span class="op">=</span><span class="st">&quot;application/json&quot;</span></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a><span class="cf">if</span> <span class="bu">[</span> <span class="st">&quot;</span><span class="va">$DATA</span><span class="st">&quot;</span> <span class="ot">=</span> <span class="st">&quot;&quot;</span> <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a>    <span class="ex">curl</span> <span class="at">-k</span> <span class="at">--user</span> admin:admin <span class="dt">\</span></span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a>      <span class="at">-X</span> <span class="st">&quot;</span><span class="va">${METHOD}</span><span class="st">&quot;</span></span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a>      <span class="ex">-H</span> <span class="st">&quot;Content-Type: </span><span class="va">${CONTENT_TYPE}</span><span class="st">&quot;</span> <span class="dt">\</span></span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a>      <span class="st">&quot;https://localhost:9200/</span><span class="va">$URL_PATH</span><span class="st">&quot;</span> <span class="kw">|</span> <span class="ex">jq</span> .</span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a><span class="cf">else</span></span>
+<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a>    <span class="ex">curl</span> <span class="at">-k</span> <span class="at">--user</span> admin:admin <span class="dt">\</span></span>
+<span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a>      <span class="at">-H</span> <span class="st">&quot;Content-Type: </span><span class="va">${CONTENT_TYPE}</span><span class="st">&quot;</span> <span class="dt">\</span></span>
+<span id="cb4-15"><a href="#cb4-15" tabindex="-1"></a>      <span class="at">-X</span> <span class="st">&quot;</span><span class="va">${METHOD}</span><span class="st">&quot;</span></span>
+<span id="cb4-16"><a href="#cb4-16" tabindex="-1"></a>      <span class="st">&quot;https://localhost:9200/</span><span class="va">$URL_PATH</span><span class="st">&quot;</span> <span class="kw">|</span> <span class="ex">jq</span> .</span>
+<span id="cb4-17"><a href="#cb4-17" tabindex="-1"></a><span class="cf">fi</span></span></code></pre></div>
+</div>
+<div id="creating-our-first-index" class="slide section level1">
+<h1>Creating our first index</h1>
+<ul>
+<li>PUT, “{INDEX_NAME}”</li>
+<li>“{INDEX_NAME}” = ‘contact-list’</li>
+</ul>
+<pre class="shell"><code>curl -k --user admin:admin \
+  https://localhost:9200/contact-list?pretty</code></pre>
+</div>
+<div id="creating-a-document-in-our-index" class="slide section level1">
+<h1>Creating a document in our index</h1>
+<ul>
+<li>POST, “{INDEX_NAME}/_doc/{DOC_ID}”</li>
+</ul>
+<pre class="shell"><code>curl -k --user admin:admin \
+  --data &#39;{&quot;name&quot;: &quot;Robert&quot;, &quot;email&quot;: &quot;rsdoiel@caltech.edu&quot;, &quot;orcid&quot;: &quot;0000-0003-0900-6903&quot;}&#39; \
+  https://localhost:9200/contact-list/_doc/0000-0003-0900-6903?pretty</code></pre>
+</div>
+<div id="reading-back-our-document" class="slide section level1">
+<h1>Reading back our document</h1>
+<ul>
+<li>GET, “{INDEX_NAME}/_doc/{DOC_ID}”</li>
+</ul>
+<pre class="shell"><code>curl -k --user admin:admin \
+  https://localhost:9200/contact-list/_doc/0000-0003-0900-6903?pretty</code></pre>
+</div>
+<div id="read-document-response" class="slide section level1">
+<h1>Read document response</h1>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode json"><code class="sourceCode json"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>  <span class="dt">&quot;_index&quot;</span> <span class="fu">:</span> <span class="st">&quot;contact-list&quot;</span><span class="fu">,</span></span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>  <span class="dt">&quot;_id&quot;</span> <span class="fu">:</span> <span class="st">&quot;0000-0003-0900-6903&quot;</span><span class="fu">,</span></span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>  <span class="dt">&quot;_version&quot;</span> <span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a>  <span class="dt">&quot;_seq_no&quot;</span> <span class="fu">:</span> <span class="dv">0</span><span class="fu">,</span></span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a>  <span class="dt">&quot;_primary_term&quot;</span> <span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a>  <span class="dt">&quot;found&quot;</span> <span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a>  <span class="dt">&quot;_source&quot;</span> <span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a>    <span class="dt">&quot;name&quot;</span> <span class="fu">:</span> <span class="st">&quot;Robert&quot;</span><span class="fu">,</span></span>
+<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a>    <span class="dt">&quot;email&quot;</span> <span class="fu">:</span> <span class="st">&quot;rsdoiel@caltech.edu&quot;</span><span class="fu">,</span></span>
+<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a>    <span class="dt">&quot;orcid&quot;</span> <span class="fu">:</span> <span class="st">&quot;0000-0003-0900-6903&quot;</span></span>
+<span id="cb8-12"><a href="#cb8-12" tabindex="-1"></a>  <span class="fu">}</span></span>
+<span id="cb8-13"><a href="#cb8-13" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+</div>
+<div id="searching-for-our-document" class="slide section level1">
+<h1>Searching for our document</h1>
+<ul>
+<li>GET, <code>{INDEX_NAME}/_search?q=robert</code></li>
+</ul>
+<pre class="shell"><code>curl -k --user admin:admin \
+  https://localhost:9200/contact-list/_search?q=robert \
+  jq .</code></pre>
+<p>NOTE: The <code>?pretty</code> option doesn’t work on
+<code>_search</code> queries. That’s pretty sad IMO. But we have
+<code>jq</code> to help us out.</p>
+</div>
+<div id="search-results" class="slide section level1">
+<h1>Search results</h1>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode json"><code class="sourceCode json"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>  <span class="dt">&quot;took&quot;</span><span class="fu">:</span> <span class="dv">5</span><span class="fu">,</span></span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>  <span class="dt">&quot;timed_out&quot;</span><span class="fu">:</span> <span class="kw">false</span><span class="fu">,</span></span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>  <span class="dt">&quot;_shards&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a>    <span class="dt">&quot;total&quot;</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a>    <span class="dt">&quot;successful&quot;</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a>    <span class="dt">&quot;skipped&quot;</span><span class="fu">:</span> <span class="dv">0</span><span class="fu">,</span></span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a>    <span class="dt">&quot;failed&quot;</span><span class="fu">:</span> <span class="dv">0</span></span>
+<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a>  <span class="fu">},</span></span>
+<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a>  <span class="dt">&quot;hits&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb10-11"><a href="#cb10-11" tabindex="-1"></a>    <span class="dt">&quot;total&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb10-12"><a href="#cb10-12" tabindex="-1"></a>      <span class="dt">&quot;value&quot;</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></span>
+<span id="cb10-13"><a href="#cb10-13" tabindex="-1"></a>      <span class="dt">&quot;relation&quot;</span><span class="fu">:</span> <span class="st">&quot;eq&quot;</span></span>
+<span id="cb10-14"><a href="#cb10-14" tabindex="-1"></a>    <span class="fu">},</span></span>
+<span id="cb10-15"><a href="#cb10-15" tabindex="-1"></a>    <span class="dt">&quot;max_score&quot;</span><span class="fu">:</span> <span class="dv">0</span><span class="er">.</span><span class="dv">2876821</span><span class="fu">,</span></span>
+<span id="cb10-16"><a href="#cb10-16" tabindex="-1"></a>    <span class="dt">&quot;hits&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb10-17"><a href="#cb10-17" tabindex="-1"></a>      <span class="fu">{</span></span>
+<span id="cb10-18"><a href="#cb10-18" tabindex="-1"></a>        <span class="dt">&quot;_index&quot;</span><span class="fu">:</span> <span class="st">&quot;contact-list&quot;</span><span class="fu">,</span></span>
+<span id="cb10-19"><a href="#cb10-19" tabindex="-1"></a>        <span class="dt">&quot;_id&quot;</span><span class="fu">:</span> <span class="st">&quot;0000-0003-0900-6903&quot;</span><span class="fu">,</span></span>
+<span id="cb10-20"><a href="#cb10-20" tabindex="-1"></a>        <span class="dt">&quot;_score&quot;</span><span class="fu">:</span> <span class="dv">0</span><span class="er">.</span><span class="dv">2876821</span><span class="fu">,</span></span>
+<span id="cb10-21"><a href="#cb10-21" tabindex="-1"></a>        <span class="dt">&quot;_source&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb10-22"><a href="#cb10-22" tabindex="-1"></a>          <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;Robert&quot;</span><span class="fu">,</span></span>
+<span id="cb10-23"><a href="#cb10-23" tabindex="-1"></a>          <span class="dt">&quot;email&quot;</span><span class="fu">:</span> <span class="st">&quot;rsdoiel@caltech.edu&quot;</span><span class="fu">,</span></span>
+<span id="cb10-24"><a href="#cb10-24" tabindex="-1"></a>          <span class="dt">&quot;orcid&quot;</span><span class="fu">:</span> <span class="st">&quot;0000-0003-0900-6903&quot;</span></span>
+<span id="cb10-25"><a href="#cb10-25" tabindex="-1"></a>        <span class="fu">}</span></span>
+<span id="cb10-26"><a href="#cb10-26" tabindex="-1"></a>      <span class="fu">}</span></span>
+<span id="cb10-27"><a href="#cb10-27" tabindex="-1"></a>    <span class="ot">]</span></span>
+<span id="cb10-28"><a href="#cb10-28" tabindex="-1"></a>  <span class="fu">}</span></span>
+<span id="cb10-29"><a href="#cb10-29" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+</div>
+<div id="retreiving-an-indexs-contents" class="slide section level1">
+<h1>Retreiving an index’s contents</h1>
+<ul>
+<li>GET, <code>{INDEX_NAME}/_search</code></li>
+</ul>
+<pre class="shell"><code>curl -k --user admin:admin -X GET https://localhost:9200/contact-list/_search?pretty</code></pre>
+<p>NOTE: When you get lots of results (more than one “page”) you can
+iterate over the pages. If you collect the ids you can then retrieve the
+documents</p>
+</div>
+<div id="the-retrieved-indexs-response" class="slide section level1">
+<h1>The retrieved index’s response</h1>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode json"><code class="sourceCode json"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>  <span class="dt">&quot;took&quot;</span> <span class="fu">:</span> <span class="dv">3</span><span class="fu">,</span></span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a>  <span class="dt">&quot;timed_out&quot;</span> <span class="fu">:</span> <span class="kw">false</span><span class="fu">,</span></span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a>  <span class="dt">&quot;_shards&quot;</span> <span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a>    <span class="dt">&quot;total&quot;</span> <span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></span>
+<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a>    <span class="dt">&quot;successful&quot;</span> <span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></span>
+<span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a>    <span class="dt">&quot;skipped&quot;</span> <span class="fu">:</span> <span class="dv">0</span><span class="fu">,</span></span>
+<span id="cb12-8"><a href="#cb12-8" tabindex="-1"></a>    <span class="dt">&quot;failed&quot;</span> <span class="fu">:</span> <span class="dv">0</span></span>
+<span id="cb12-9"><a href="#cb12-9" tabindex="-1"></a>  <span class="fu">},</span></span>
+<span id="cb12-10"><a href="#cb12-10" tabindex="-1"></a>  <span class="dt">&quot;hits&quot;</span> <span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb12-11"><a href="#cb12-11" tabindex="-1"></a>    <span class="dt">&quot;total&quot;</span> <span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb12-12"><a href="#cb12-12" tabindex="-1"></a>      <span class="dt">&quot;value&quot;</span> <span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></span>
+<span id="cb12-13"><a href="#cb12-13" tabindex="-1"></a>      <span class="dt">&quot;relation&quot;</span> <span class="fu">:</span> <span class="st">&quot;eq&quot;</span></span>
+<span id="cb12-14"><a href="#cb12-14" tabindex="-1"></a>    <span class="fu">},</span></span>
+<span id="cb12-15"><a href="#cb12-15" tabindex="-1"></a>    <span class="dt">&quot;max_score&quot;</span> <span class="fu">:</span> <span class="fl">1.0</span><span class="fu">,</span></span>
+<span id="cb12-16"><a href="#cb12-16" tabindex="-1"></a>    <span class="dt">&quot;hits&quot;</span> <span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb12-17"><a href="#cb12-17" tabindex="-1"></a>      <span class="fu">{</span></span>
+<span id="cb12-18"><a href="#cb12-18" tabindex="-1"></a>        <span class="dt">&quot;_index&quot;</span> <span class="fu">:</span> <span class="st">&quot;contact-list&quot;</span><span class="fu">,</span></span>
+<span id="cb12-19"><a href="#cb12-19" tabindex="-1"></a>        <span class="dt">&quot;_id&quot;</span> <span class="fu">:</span> <span class="st">&quot;0000-0003-0900-6903&quot;</span><span class="fu">,</span></span>
+<span id="cb12-20"><a href="#cb12-20" tabindex="-1"></a>        <span class="dt">&quot;_score&quot;</span> <span class="fu">:</span> <span class="fl">1.0</span><span class="fu">,</span></span>
+<span id="cb12-21"><a href="#cb12-21" tabindex="-1"></a>        <span class="dt">&quot;_source&quot;</span> <span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb12-22"><a href="#cb12-22" tabindex="-1"></a>          <span class="dt">&quot;name&quot;</span> <span class="fu">:</span> <span class="st">&quot;Robert&quot;</span><span class="fu">,</span></span>
+<span id="cb12-23"><a href="#cb12-23" tabindex="-1"></a>          <span class="dt">&quot;email&quot;</span> <span class="fu">:</span> <span class="st">&quot;rsdoiel@caltech.edu&quot;</span><span class="fu">,</span></span>
+<span id="cb12-24"><a href="#cb12-24" tabindex="-1"></a>          <span class="dt">&quot;orcid&quot;</span> <span class="fu">:</span> <span class="st">&quot;0000-0003-0900-6903&quot;</span></span>
+<span id="cb12-25"><a href="#cb12-25" tabindex="-1"></a>        <span class="fu">}</span></span>
+<span id="cb12-26"><a href="#cb12-26" tabindex="-1"></a>      <span class="fu">}</span></span>
+<span id="cb12-27"><a href="#cb12-27" tabindex="-1"></a>    <span class="ot">]</span></span>
+<span id="cb12-28"><a href="#cb12-28" tabindex="-1"></a>  <span class="fu">}</span></span>
+<span id="cb12-29"><a href="#cb12-29" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+</div>
+<div id="retrieving-the-specific-document-with-an-_id"
+class="slide section level1">
+<h1>Retrieving the specific document with an <code>_id</code></h1>
+<pre class="shell"><code>curl -k --user admin:admin \
+  https://localhost:9200/contact-list/_doc/0000-0003-0900-6903?pretty</code></pre>
+<p>And the response:</p>
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode json"><code class="sourceCode json"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a>  <span class="dt">&quot;_index&quot;</span> <span class="fu">:</span> <span class="st">&quot;contact-list&quot;</span><span class="fu">,</span></span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a>  <span class="dt">&quot;_id&quot;</span> <span class="fu">:</span> <span class="st">&quot;0000-0003-0900-6903&quot;</span><span class="fu">,</span></span>
+<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a>  <span class="dt">&quot;_version&quot;</span> <span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></span>
+<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a>  <span class="dt">&quot;_seq_no&quot;</span> <span class="fu">:</span> <span class="dv">3</span><span class="fu">,</span></span>
+<span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a>  <span class="dt">&quot;_primary_term&quot;</span> <span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></span>
+<span id="cb14-7"><a href="#cb14-7" tabindex="-1"></a>  <span class="dt">&quot;found&quot;</span> <span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
+<span id="cb14-8"><a href="#cb14-8" tabindex="-1"></a>  <span class="dt">&quot;_source&quot;</span> <span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb14-9"><a href="#cb14-9" tabindex="-1"></a>    <span class="dt">&quot;name&quot;</span> <span class="fu">:</span> <span class="st">&quot;Robert&quot;</span><span class="fu">,</span></span>
+<span id="cb14-10"><a href="#cb14-10" tabindex="-1"></a>    <span class="dt">&quot;email&quot;</span> <span class="fu">:</span> <span class="st">&quot;rsdoiel@caltech.edu&quot;</span><span class="fu">,</span></span>
+<span id="cb14-11"><a href="#cb14-11" tabindex="-1"></a>    <span class="dt">&quot;orcid&quot;</span> <span class="fu">:</span> <span class="st">&quot;0000-0003-0900-6903&quot;</span></span>
+<span id="cb14-12"><a href="#cb14-12" tabindex="-1"></a>  <span class="fu">}</span></span>
+<span id="cb14-13"><a href="#cb14-13" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+</div>
+<div id="updating-an-index-document" class="slide section level1">
+<h1>Updating an index document</h1>
+<ul>
+<li>POST, <code>{INDEX_NAME}/_doc/{DOC_ID}</code></li>
+</ul>
+<p>In update, I will add a website field.</p>
+<pre class="shell"><code>curl -k --user admin:admin \
+  -H &#39;Content-Type: application/json&#39; \
+  --data &#39;{&quot;name&quot;:&quot;Robert&quot;,&quot;email&quot;:&quot;rsdoiel@caltech.edu&quot;,&quot;orcid&quot;:&quot;0000-0003-0900-6903&quot;,&quot;url&quot;:&quot;https://rsdoiel.github.io&quot;}&#39; \
+  -X POST https://localhost:9200/contact-list/_doc/0000-0003-0900-6903?pretty</code></pre>
+</div>
+<div id="update-response" class="slide section level1">
+<h1>Update response</h1>
+<div class="sourceCode" id="cb16"><pre
+class="sourceCode json"><code class="sourceCode json"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a>  <span class="dt">&quot;_index&quot;</span> <span class="fu">:</span> <span class="st">&quot;contact-list&quot;</span><span class="fu">,</span></span>
+<span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a>  <span class="dt">&quot;_id&quot;</span> <span class="fu">:</span> <span class="st">&quot;0000-0003-0900-6903&quot;</span><span class="fu">,</span></span>
+<span id="cb16-4"><a href="#cb16-4" tabindex="-1"></a>  <span class="dt">&quot;_version&quot;</span> <span class="fu">:</span> <span class="dv">2</span><span class="fu">,</span></span>
+<span id="cb16-5"><a href="#cb16-5" tabindex="-1"></a>  <span class="dt">&quot;result&quot;</span> <span class="fu">:</span> <span class="st">&quot;updated&quot;</span><span class="fu">,</span></span>
+<span id="cb16-6"><a href="#cb16-6" tabindex="-1"></a>  <span class="dt">&quot;_shards&quot;</span> <span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb16-7"><a href="#cb16-7" tabindex="-1"></a>    <span class="dt">&quot;total&quot;</span> <span class="fu">:</span> <span class="dv">2</span><span class="fu">,</span></span>
+<span id="cb16-8"><a href="#cb16-8" tabindex="-1"></a>    <span class="dt">&quot;successful&quot;</span> <span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></span>
+<span id="cb16-9"><a href="#cb16-9" tabindex="-1"></a>    <span class="dt">&quot;failed&quot;</span> <span class="fu">:</span> <span class="dv">0</span></span>
+<span id="cb16-10"><a href="#cb16-10" tabindex="-1"></a>  <span class="fu">},</span></span>
+<span id="cb16-11"><a href="#cb16-11" tabindex="-1"></a>  <span class="dt">&quot;_seq_no&quot;</span> <span class="fu">:</span> <span class="dv">4</span><span class="fu">,</span></span>
+<span id="cb16-12"><a href="#cb16-12" tabindex="-1"></a>  <span class="dt">&quot;_primary_term&quot;</span> <span class="fu">:</span> <span class="dv">1</span></span>
+<span id="cb16-13"><a href="#cb16-13" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+</div>
+<div id="dropping-document" class="slide section level1">
+<h1>Dropping document</h1>
+<ul>
+<li>DELETE, <code>{INDEX_NAME}/_doc/{DOC_ID}</code></li>
+</ul>
+<pre class="shell"><code>curl -k --user admin:admin \
+  -X DELETE https://localhost:9200/contact-list/_doc/0000-0003-0900-6903?pretty</code></pre>
+</div>
+<div id="dropping-document-response" class="slide section level1">
+<h1>Dropping document response</h1>
+<div class="sourceCode" id="cb18"><pre
+class="sourceCode json"><code class="sourceCode json"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a>    <span class="dt">&quot;_index&quot;</span><span class="fu">:</span><span class="st">&quot;contact-list&quot;</span><span class="fu">,</span></span>
+<span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a>    <span class="dt">&quot;_id&quot;</span><span class="fu">:</span><span class="st">&quot;0000-0003-0900-6903&quot;</span><span class="fu">,</span></span>
+<span id="cb18-4"><a href="#cb18-4" tabindex="-1"></a>    <span class="dt">&quot;_version&quot;</span><span class="fu">:</span><span class="dv">2</span><span class="fu">,</span></span>
+<span id="cb18-5"><a href="#cb18-5" tabindex="-1"></a>    <span class="dt">&quot;result&quot;</span><span class="fu">:</span><span class="st">&quot;deleted&quot;</span><span class="fu">,</span></span>
+<span id="cb18-6"><a href="#cb18-6" tabindex="-1"></a>    <span class="dt">&quot;_shards&quot;</span><span class="fu">:{</span></span>
+<span id="cb18-7"><a href="#cb18-7" tabindex="-1"></a>        <span class="dt">&quot;total&quot;</span><span class="fu">:</span><span class="dv">2</span><span class="fu">,</span></span>
+<span id="cb18-8"><a href="#cb18-8" tabindex="-1"></a>        <span class="dt">&quot;successful&quot;</span><span class="fu">:</span><span class="dv">1</span><span class="fu">,</span></span>
+<span id="cb18-9"><a href="#cb18-9" tabindex="-1"></a>        <span class="dt">&quot;failed&quot;</span><span class="fu">:</span><span class="dv">0</span></span>
+<span id="cb18-10"><a href="#cb18-10" tabindex="-1"></a>    <span class="fu">},</span></span>
+<span id="cb18-11"><a href="#cb18-11" tabindex="-1"></a>    <span class="dt">&quot;_seq_no&quot;</span><span class="fu">:</span><span class="dv">1</span><span class="fu">,</span></span>
+<span id="cb18-12"><a href="#cb18-12" tabindex="-1"></a>    <span class="dt">&quot;_primary_term&quot;</span><span class="fu">:</span><span class="dv">1</span></span>
+<span id="cb18-13"><a href="#cb18-13" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+</div>
+<div id="dumping-our-index-with-elasticdump"
+class="slide section level1">
+<h1>Dumping our index with elasticdump</h1>
+<p><a
+href="https://inveniordm.docs.cern.ch/develop/howtos/backup_search_indices/#elasticdump"
+class="uri">https://inveniordm.docs.cern.ch/develop/howtos/backup_search_indices/#elasticdump</a></p>
+<p>For index mappings:</p>
+<pre class="shell"><code>env NODE_TLS_REJECT_UNAUTHORIZED=0 elasticdump \    
+   --input https://admin:admin@localhost:9200/contact-list \
+   --output contact-list.mappings.json \
+   --type mapping</code></pre>
+<p>For index data:</p>
+<pre class="shell"><code>env NODE_TLS_REJECT_UNAUTHORIZED=0 elasticdump \    
+   --input https://admin:admin@localhost:9200/contact-list \
+   --output contact-list.data.json \
+   --type data</code></pre>
+</div>
+<div id="dropping-an-index" class="slide section level1">
+<h1>Dropping an index</h1>
+<ul>
+<li>DELETE, <code>{INDEX_NAME}</code></li>
+</ul>
+<pre class="shell"><code>curl -k --user admin:admin \
+  -X DELETE https://localhost:9200/contact-list</code></pre>
+</div>
+<div id="restoring-an-index-with-elasticdump"
+class="slide section level1">
+<h1>Restoring an index with elasticdump</h1>
+<p>For index mapping:</p>
+<pre class="shell"><code>env NODE_TLS_REJECT_UNAUTHORIZED=0 elasticdump \    
+   --input contact-list.mappings.json \
+   --oputput https://admin:admin@localhost:9200/contact-list \
+   --type mapping</code></pre>
+<p>For index data:</p>
+<pre class="shell"><code>env NODE_TLS_REJECT_UNAUTHORIZED=0 elasticdump \    
+   --input contact-list.data.json \
+   --oputput https://admin:admin@localhost:9200/contact-list \
+   --type data</code></pre>
+</div>
+<div id="what-weve-learned-so-far" class="slide section level1">
+<h1>What we’ve learned so far</h1>
+<ul>
+<li>Basic interactions of OpenSearch REST API</li>
+<li>Basic management actions
+<ul>
+<li>create, read, update, delete, list, restore</li>
+</ul></li>
+<li>Backup and restore with <code>elasticdump</code></li>
+</ul>
+<p>Can we do better???</p>
+</div>
+<div id="part-iii-improving-our-indexes" class="slide section level1">
+<h1>Part: III, improving our indexes</h1>
+<ul>
+<li>Index mapping</li>
+<li>Aggregations</li>
+</ul>
+</div>
+<div id="creating-our-first-index-map" class="slide section level1">
+<h1>Creating our first index map</h1>
+</div>
+<div id="retrieving-our-indexs-mapping" class="slide section level1">
+<h1>Retrieving our index’s mapping</h1>
+<ul>
+<li>GET, ’{INDEX_NAME}/_mapping’</li>
+</ul>
+<pre><code>curl https://localhost:9200/{INDEX_NAME}/_mapping?pretty=true</code></pre>
+</div>
+<div id="basic-management-activities" class="slide section level1">
+<h1>Basic management activities</h1>
+<ul>
+<li>Creating mapping for new indexes</li>
+<li>Index documents</li>
+<li>Managing aliases of indexes</li>
+<li>Manage indexes (e.g. rollups of time series indexes)</li>
+<li>Providing search service</li>
+</ul>
+</div>
+<div id="managing-opensearch" class="slide section level1">
+<h1>Managing OpenSearch</h1>
+<ul>
+<li>JSON REST API running on port 9200</li>
+<li>A “dashboard” web service</li>
+<li>3rd party tooling
+<ul>
+<li>elasticdump (NodeJS/NPM)</li>
+<li>curator (Python)</li>
+<li>cURL, Httpie</li>
+</ul></li>
+</ul>
+</div>
+<div id="some-json-api-end-points" class="slide section level1">
+<h1>Some JSON API end points</h1>
+<ul>
+<li><code>_settings</code></li>
+<li><code>_aliases</code></li>
+<li><code>_search</code></li>
+<li><code>_mapping</code></li>
+<li><code>_source</code></li>
+<li><code>_doc</code></li>
+</ul>
 </div>
 <div id="what-is-an-index" class="slide section level1">
 <h1>What is an index?</h1>
 <ul>
-<li>TBD</li>
+<li>A searchable data structure for full text structured documents</li>
+<li>A collection “documents” expressed as JSON</li>
 </ul>
 </div>
-<div id="creating-indexes" class="slide section level1">
-<h1>Creating indexes</h1>
+<div id="what-does-my-opensearch-engine-manage"
+class="slide section level1">
+<h1>What does my OpenSearch engine manage?</h1>
 <ul>
-<li>TBD</li>
+<li>Retrieve the <code>_settings</code> JSON document with get</li>
+</ul>
+<pre class="shell"><code>curl https://localhost:9200/_settings</code></pre>
+</div>
+<div id="creating-a-new-index" class="slide section level1">
+<h1>Creating a new index</h1>
+<p><a
+href="https://opensearch.org/docs/latest/api-reference/index-apis/create-index/"
+class="uri">https://opensearch.org/docs/latest/api-reference/index-apis/create-index/</a></p>
+<ul>
+<li>PUT <code>&lt;index-name&gt;</code></li>
 </ul>
 </div>
-<div id="indexing" class="slide section level1">
-<h1>Indexing</h1>
+<div id="creating-a-new-index-map" class="slide section level1">
+<h1>Creating a new index map</h1>
+<ul>
+<li>POST of JSON document of mapping into REST API</li>
+</ul>
+</div>
+<div id="populating-our-index" class="slide section level1">
+<h1>Populating our index</h1>
+<ul>
+<li>POST to …</li>
+</ul>
+</div>
+<div id="testing-our-index" class="slide section level1">
+<h1>Testing our index</h1>
+<ul>
+<li>GET <code>_search</code></li>
+</ul>
+</div>
+<div id="retrieving-our-current-index-map" class="slide section level1">
+<h1>Retrieving our current index map</h1>
+<ul>
+<li>GET <code>_index_mapping</code></li>
+</ul>
+</div>
+<div id="retreiving-the-contents-of-an-index"
+class="slide section level1">
+<h1>Retreiving the contents of an index</h1>
+<ul>
+<li>GET <code>_search</code></li>
+<li>Search for everything</li>
+<li>Loop through all results</li>
+</ul>
+</div>
+<div id="backups-for-rdm" class="slide section level1">
+<h1>Backups for RDM</h1>
 <ul>
 <li>TBD</li>
 </ul>
@@ -162,6 +649,72 @@ opensearch REST API or Dashboard.</li>
 <li>TBD</li>
 </ul>
 </div>
+<div id="part-iii-postscript" class="slide section level1">
+<h1>Part III: Postscript</h1>
+<h2 id="what-is-opensearch">What is OpenSearch?</h2>
+<ul>
+<li>A fork of Elasticsearch</li>
+<li>A full text search engine based on Apache Lucene (like Solr)</li>
+<li>Elasticsearch was a response to the stagnation of Solr some years
+back
+<ul>
+<li>Elasticsearch embraced a JSON REST API over XML of the venerable
+Solr of the time</li>
+</ul></li>
+</ul>
+</div>
+<div id="opensearch-vs.-elasticsearch-vs.-solr"
+class="slide section level1">
+<h1>OpenSearch vs. Elasticsearch vs. Solr?</h1>
+<ul>
+<li>They’re all based on All Based on Lucene</li>
+<li>They share many concepts in common (e.g. indexes, REST API, support
+of JSON/XML)</li>
+<li>General knowledge is transferable between them</li>
+<li>Specifics very</li>
+</ul>
+</div>
+<div id="opensearch-vs-elasticsearch-vs.-solr."
+class="slide section level1">
+<h1>OpenSearch vs Elasticsearch vs. Solr.</h1>
+<ul>
+<li>Solr is best documented</li>
+<li>Invenio RDM started out with Elasticsearch</li>
+<li>Invenio RDM now uses OpenSearch</li>
+</ul>
+</div>
+<div id="opensearch-vs-elasticserch" class="slide section level1">
+<h1>OpenSearch vs Elasticserch</h1>
+<ul>
+<li>Documentaiton for Elasticsearch largely applies to OpenSearch</li>
+<li>Tooling right now is common between the two (e.g. elasticdump)</li>
+<li>OpenSearch documentation looks shiny but isn’t that helpful</li>
+<li>RDM’s documentation of OpenSearch is a better place to start</li>
+</ul>
+</div>
+<div id="opensearch" class="slide section level1">
+<h1>OpenSearch</h1>
+<ul>
+<li>OpenSearch is Amazon’s fork of Elasticsearch</li>
+<li>Amazon wants all the support income and is cutting out Elasticsearch
+Co.</li>
+<li>When Elasticsearch was created Solr had stagnated and was XML
+only</li>
+<li>Solr/Elasticsearch/OpenSearch are functionally equivallent but their
+API are different</li>
+</ul>
+</div>
+<div id="opensearch-1" class="slide section level1">
+<h1>OpenSearch</h1>
+<ul>
+<li>Today, February 2024, OpenSearch and Elasticsearch are compatible in
+terms of API and tooling</li>
+<li>Who knows what tomorrow may bring?
+<ul>
+<li>At some point Amazon will embrace and extend</li>
+</ul></li>
+</ul>
+</div>
 <div id="in-conclusion" class="slide section level1">
 <h1>In conclusion</h1>
 <ul>
@@ -172,13 +725,13 @@ opensearch REST API or Dashboard.</li>
 <h1>About</h1>
 <ul>
 <li>Caltech Library Digital Library Development Group</li>
-<li><a href="https://caltechlibrary.github.io/opensearch-machine"
-class="uri">https://caltechlibrary.github.io/opensearch-machine</a></li>
-<li><a href="https://github.com/caltechlibrary/opensearch-machine"
-class="uri">https://github.com/caltechlibrary/opensearch-machine</a></li>
+<li><a href="https://caltechlibrary.github.io/opensearch_machine"
+class="uri">https://caltechlibrary.github.io/opensearch_machine</a></li>
+<li><a href="https://github.com/caltechlibrary/opensearch_machine"
+class="uri">https://github.com/caltechlibrary/opensearch_machine</a></li>
 <li>Issues <a
-href="https://github.com/caltechlibrary/opensearch-machine/issues"
-class="uri">https://github.com/caltechlibrary/opensearch-machine/issues</a></li>
+href="https://github.com/caltechlibrary/opensearch_machine/issues"
+class="uri">https://github.com/caltechlibrary/opensearch_machine/issues</a></li>
 </ul>
 </div>
 </body>

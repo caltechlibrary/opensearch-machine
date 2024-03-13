@@ -23,10 +23,10 @@
 </nav>
 
 <section>
-<h1 id="opensearch-machine">Opensearch Machine</h1>
+<h1 id="part-i-opensearch-machine">Part I: OpenSearch Machine</h1>
 <h2
 id="learning-and-exploring-opensearch-using-a-multipass-managed-virtual-machine">Learning
-and exploring Opensearch using a Multipass managed virtual machine</h2>
+and exploring OpenSearch using a Multipass managed virtual machine</h2>
 <h1 id="knowledge-requirements">Knowledge requirements</h1>
 <ul>
 <li>You need to comfortable with working on the command line</li>
@@ -40,22 +40,21 @@ and exploring Opensearch using a Multipass managed virtual machine</h2>
 machine)</h1>
 <ul>
 <li>macOS, Linix or Windows based machine (ARM or Intel CPU)</li>
-<li><a href="https://multipass.run">Multipass</a></li>
+<li><a href="https://multipass.run">Multipass</a> needs to be
+installed</li>
 </ul>
 <h1 id="software-requirements-host-machine">Software Requirements (Host
 machine)</h1>
 <ul>
-<li>Web browser (e.g. Firefox)</li>
 <li><a href="https://curl.se">cURL</a></li>
 <li>A plain text editor</li>
 </ul>
 <h1 id="what-well-be-doing-host-and-virtual-machine">What we’ll be doing
 (host and virtual machine)</h1>
 <ul>
-<li>Running programs “terminal” or “shell”</li>
-<li>using a program called <code>curl</code> to work with
-Opensearch</li>
-<li>using a web browser</li>
+<li>Running programs “terminal” or multipass “shell”</li>
+<li>using a program called <code>curl</code> to interact with
+OpenSearch</li>
 <li>light text editing</li>
 </ul>
 <h1 id="before-you-start">Before you start</h1>
@@ -66,36 +65,168 @@ machine</li>
 </ol>
 <h1 id="getting-started">Getting started</h1>
 <ol type="1">
-<li>Run <code>./opensearch-machine.bash</code> to create the
-<code>opensearch-machine</code> virtual machine</li>
-<li>Run <code>multipass shell opensearch-machine</code> to finish
+<li>Run <code>./opensearch_machine.bash</code> to create the
+<code>opensearch_machine</code> virtual machine</li>
+<li>Run <code>multipass shell opensearch_machine</code> to finish
 setting things up</li>
 </ol>
-<h2 id="on-opensearch-marchine">On, opensearch-marchine</h2>
+<h1 id="on-opensearch_machine">On, opensearch_machine</h1>
 <ol type="1">
 <li>Run <code>01-setup-scripts.bash</code></li>
 <li>Run <code>07-add-opensearch.bash</code></li>
 <li>Source the updated <code>.bashrc</code> file.</li>
 </ol>
-<h2 id="on-your-host-machine">On your host machine</h2>
-<ol type="1">
-<li>Use <code>multipass info opensearch-machine</code> to find the IP
-address of the virtual machine</li>
-<li>Point your web browser at virtual machine using the port number for
-opensearch REST API or Dashboard.</li>
-</ol>
 <blockquote>
-<p>Now we’re ready to start working with Opensearch</p>
+<p>Now we’re ready to start working with OpenSearch</p>
 </blockquote>
+<h1 id="part-ii-working-with-opensearch">Part II: Working with
+OpenSearch</h1>
+<p>We’ll be using …</p>
+<ul>
+<li>curl (aka cURL)</li>
+<li>jq</li>
+<li>sudo systemctl</li>
+</ul>
+<h1 id="make-sure-opensearch-us-up-and-running-healthy">Make sure
+OpenSearch us up and running healthy</h1>
+<pre class="shell"><code>sudo systemctl status opensearch.service</code></pre>
+<h1 id="exploring-opensearch">Exploring OpenSearch</h1>
+<p>Check to see how OpenSearch is currently configured. By default
+OpenSearch runs on https (self signed certs) and requires “admin”
+account to access.</p>
+<pre class="shell"><code>curl -k --user admin:admin https://localhost:9200/_settings?pretty</code></pre>
+<p>This should return JSON which shows the settings of our OpenSearch
+installation.</p>
+<h1 id="creating-our-first-index">Creating our first index</h1>
+<ul>
+<li>PUT, “{INDEX_NAME}”</li>
+<li>“{INDEX_NAME}” = ‘contact-list’</li>
+</ul>
+<pre class="shell"><code>curl -k -user admin:admin https://localhost:9200/contact-list?pretty</code></pre>
+<h1 id="creating-an-document-in-our-index">Creating an document in our
+index</h1>
+<ul>
+<li>POST, “{INDEX_NAME}/_doc/{DOC_ID}”</li>
+</ul>
+<pre class="shell"><code>curl -k -user admin:admin \
+     --data &#39;{&quot;name&quot;: &quot;Robert&quot;, &quot;email&quot;: &quot;rsdoiel@caltech.edu&quot;, &quot;orcid&quot;: &quot;0000-0003-0900-6903&quot;}&#39; \
+     https://localhost:9200/contact-list/_doc/0000-0003-0900-6903</code></pre>
+<h1 id="reading-back-the-contents-of-our-index">Reading back the
+contents of our index</h1>
+<h1 id="reading-back-our-document">Reading back our document</h1>
+<p>NOTE: This includes index metadata for our instance</p>
+<h1 id="show-index-metadata">Show index metadata</h1>
+<ul>
+<li>GET, <code>{INDEX_NAME}</code></li>
+</ul>
+<pre class="shell"><code>curl http://localhost:9200/{INDEX_NAME}?pretty=true</code></pre>
+<p>NOTE: If you use an index aliases name then you get all the mappings
+associated with that aliases</p>
+<h1 id="retrieving-an-indexs-mapping">Retrieving an index’s mapping</h1>
+<ul>
+<li>GET, ’{INDEX_NAME}/_mapping’</li>
+</ul>
+<pre><code>curl http://localhost:9200/{INDEX_NAME}/_mapping?pretty=true</code></pre>
+<h1 id="adding-a-document-to-the-index">Adding a document to the
+index</h1>
+<ul>
+<li>POST, <code>{INDEX_NAME}</code></li>
+</ul>
+<h1 id="retrieving-the-index-map">Retrieving the index map</h1>
+<ul>
+<li>GET, <code>_index_mapping</code></li>
+</ul>
+<h1 id="retreiving-index-contents">Retreiving index contents</h1>
+<ul>
+<li>GET, <code>_search</code></li>
+<li>Loop through results</li>
+</ul>
+<h1 id="updating-an-index-document">Updating an index document</h1>
+<ul>
+<li>POST, <code>{INDEX_NAME}</code></li>
+</ul>
+<h1 id="dropping-document">Dropping document</h1>
+<h1 id="dropping-an-index">Dropping an index</h1>
+<h1 id="restoring-an-index">Restoring an index</h1>
+<h1 id="what-weve-learned">What we’ve learned</h1>
+<ul>
+<li>Basic interactions of OpenSearch REST API</li>
+<li>Basic management actions
+<ul>
+<li>create, read, update, delete, list, restore</li>
+</ul></li>
+</ul>
+<h1 id="basic-management-activities">Basic management activities</h1>
+<ul>
+<li>Creating mapping for new indexes</li>
+<li>Index documents</li>
+<li>Managing aliases of indexes</li>
+<li>Manage indexes (e.g. rollups of time series indexes)</li>
+<li>Providing search service</li>
+</ul>
+<h1 id="managing-opensearch">Managing OpenSearch</h1>
+<ul>
+<li>JSON REST API running on port 9200</li>
+<li>A “dashboard” web service</li>
+<li>3rd party tooling
+<ul>
+<li>elasticdump (NodeJS/NPM)</li>
+<li>curator (Python)</li>
+<li>cURL, Httpie</li>
+</ul></li>
+</ul>
+<h1 id="some-json-api-end-points">Some JSON API end points</h1>
+<ul>
+<li><code>_settings</code></li>
+<li><code>_aliases</code></li>
+<li><code>_search</code></li>
+<li><code>_mapping</code></li>
+<li><code>_source</code></li>
+<li><code>_doc</code></li>
+</ul>
 <h1 id="what-is-an-index">What is an index?</h1>
 <ul>
-<li>TBD</li>
+<li>A searchable data structure for full text structured documents</li>
+<li>A collection “documents” expressed as JSON</li>
 </ul>
-<h1 id="creating-indexes">Creating indexes</h1>
+<h1 id="what-does-my-opensearch-engine-manage">What does my OpenSearch
+engine manage?</h1>
 <ul>
-<li>TBD</li>
+<li>Retrieve the <code>_settings</code> JSON document with get</li>
 </ul>
-<h1 id="indexing">Indexing</h1>
+<pre class="shell"><code>curl http://localhost:9200/_settings</code></pre>
+<h1 id="creating-a-new-index">Creating a new index</h1>
+<p><a
+href="https://opensearch.org/docs/latest/api-reference/index-apis/create-index/"
+class="uri">https://opensearch.org/docs/latest/api-reference/index-apis/create-index/</a></p>
+<ul>
+<li>PUT <code>&lt;index-name&gt;</code></li>
+</ul>
+<h1 id="creating-a-new-index-map">Creating a new index map</h1>
+<ul>
+<li>POST of JSON document of mapping into REST API</li>
+</ul>
+<h1 id="populating-our-index">Populating our index</h1>
+<ul>
+<li>POST to …</li>
+</ul>
+<h1 id="testing-our-index">Testing our index</h1>
+<ul>
+<li>GET <code>_search</code></li>
+</ul>
+<h1 id="retrieving-our-current-index-map">Retrieving our current index
+map</h1>
+<ul>
+<li>GET <code>_index_mapping</code></li>
+</ul>
+<h1 id="retreiving-the-contents-of-an-index">Retreiving the contents of
+an index</h1>
+<ul>
+<li>GET <code>_search</code></li>
+<li>Search for everything</li>
+<li>Loop through all results</li>
+</ul>
+<h1 id="backups-for-rdm">Backups for RDM</h1>
 <ul>
 <li>TBD</li>
 </ul>
@@ -111,6 +242,60 @@ opensearch REST API or Dashboard.</li>
 <ul>
 <li>TBD</li>
 </ul>
+<h1 id="part-iii-postscript">Part III: Postscript</h1>
+<h2 id="what-is-opensearch">What is OpenSearch?</h2>
+<ul>
+<li>A fork of Elasticsearch</li>
+<li>A full text search engine based on Apache Lucene (like Solr)</li>
+<li>Elasticsearch was a response to the stagnation of Solr some years
+back
+<ul>
+<li>Elasticsearch embraced a JSON REST API over XML of the venerable
+Solr of the time</li>
+</ul></li>
+</ul>
+<h1 id="opensearch-vs.-elasticsearch-vs.-solr">OpenSearch
+vs. Elasticsearch vs. Solr?</h1>
+<ul>
+<li>They’re all based on All Based on Lucene</li>
+<li>They share many concepts in common (e.g. indexes, REST API, support
+of JSON/XML)</li>
+<li>General knowledge is transferable between them</li>
+<li>Specifics very</li>
+</ul>
+<h1 id="opensearch-vs-elasticsearch-vs.-solr.">OpenSearch vs
+Elasticsearch vs. Solr.</h1>
+<ul>
+<li>Solr is best documented</li>
+<li>Invenio RDM started out with Elasticsearch</li>
+<li>Invenio RDM now uses OpenSearch</li>
+</ul>
+<h1 id="opensearch-vs-elasticserch">OpenSearch vs Elasticserch</h1>
+<ul>
+<li>Documentaiton for Elasticsearch largely applies to OpenSearch</li>
+<li>Tooling right now is common between the two (e.g. elasticdump)</li>
+<li>OpenSearch documentation looks shiny but isn’t that helpful</li>
+<li>RDM’s documentation of OpenSearch is a better place to start</li>
+</ul>
+<h1 id="opensearch">OpenSearch</h1>
+<ul>
+<li>OpenSearch is Amazon’s fork of Elasticsearch</li>
+<li>Amazon wants all the support income and is cutting out Elasticsearch
+Co.</li>
+<li>When Elasticsearch was created Solr had stagnated and was XML
+only</li>
+<li>Solr/Elasticsearch/OpenSearch are functionally equivallent but their
+API are different</li>
+</ul>
+<h1 id="opensearch-1">OpenSearch</h1>
+<ul>
+<li>Today, February 2024, OpenSearch and Elasticsearch are compatible in
+terms of API and tooling</li>
+<li>Who knows what tomorrow may bring?
+<ul>
+<li>At some point Amazon will embrace and extend</li>
+</ul></li>
+</ul>
 <h1 id="in-conclusion">In conclusion</h1>
 <ul>
 <li>Thank you!</li>
@@ -118,13 +303,13 @@ opensearch REST API or Dashboard.</li>
 <h1 id="about">About</h1>
 <ul>
 <li>Caltech Library Digital Library Development Group</li>
-<li><a href="https://caltechlibrary.github.io/opensearch-machine"
-class="uri">https://caltechlibrary.github.io/opensearch-machine</a></li>
-<li><a href="https://github.com/caltechlibrary/opensearch-machine"
-class="uri">https://github.com/caltechlibrary/opensearch-machine</a></li>
+<li><a href="https://caltechlibrary.github.io/opensearch_machine"
+class="uri">https://caltechlibrary.github.io/opensearch_machine</a></li>
+<li><a href="https://github.com/caltechlibrary/opensearch_machine"
+class="uri">https://github.com/caltechlibrary/opensearch_machine</a></li>
 <li>Issues <a
-href="https://github.com/caltechlibrary/opensearch-machine/issues"
-class="uri">https://github.com/caltechlibrary/opensearch-machine/issues</a></li>
+href="https://github.com/caltechlibrary/opensearch_machine/issues"
+class="uri">https://github.com/caltechlibrary/opensearch_machine/issues</a></li>
 </ul>
 </section>
 
