@@ -3,10 +3,10 @@
   "@type": "SoftwareSourceCode",
   "name": "Opensearch Machine",
   "identifier": "opensearch-machine",
-  "description": "A Multipass virtual machine setup for learning and exploring Opensearch",
-  "version": "0.0.0",
-  "datePublished": "2024-03-08",
+  "description": "A Multipass virtual machine setup for learning and exploring OpenSearch",
+  "version": "0.0.1",
   "dateCreated": "2024-03-07",
+  "dateModified": "2024-03-12",
   "author": [
     {
       "@id": "https://orcid.org/0000-0003-0900-6903",
@@ -44,17 +44,18 @@
   "issueTracker": "https://github.com/caltechlibrary/opensearch-machine/issues",
   "downloadUrl": "https://github.com/caltechlibrary/opensearch-machine/archive/main.zip",
   "keywords": [
-    "opensearch",
+    "OpenSearch",
 	"search engine",
 	"virtual machine"
   ],
-  "developmentStatus": "concept",
+  "developmentStatus": "wip",
   "softwareRequirements": [
     "GNU Make >=3.8",
 	"Pandoc >= 3.1",
 	"PageFind >= 1.0.4",
     "Bash >= 3.2",
-	"Python >= 3",
-    "Multipass >= 1.13"
+	"Python >= 3",
+    "Multipass >= 1.13",
+	"jq >= 1.7"
   ]
 }
