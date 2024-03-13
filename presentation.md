@@ -131,6 +131,24 @@ curl -k --user admin:admin \
   https://localhost:9200/contact-list/_doc/0000-0003-0900-6903?pretty
 ~~~
 
+# Response from creating our document
+
+~~~json
+{
+  "_index": "content-list",
+  "_id": "0000-0003-0900-6903",
+  "_version": 1,
+  "result": "created",
+  "_shards": {
+    "total": 2,
+    "successful": 1,
+    "failed": 0
+  },
+  "_seq_no": 0,
+  "_primary_term": 1
+}
+~~~
+
 # Reading back our document
 
 - GET, "{INDEX_NAME}/_doc/{DOC_ID}"
