@@ -1,16 +1,16 @@
 ---
-title: "opensearch-machine.bash(1) user manual"
+title: "opensearch_machine.bash(1) user manual"
 pubDate: 2024-03-08
 author: "R. S. Doiel"
 ---
 
 # NAME
 
-opensearch-machine.bash
+opensearch_machine.bash
 
 # SYNOPSIS
 
-opensearch-machine.bash [MACHINE_NAME] [CLOUD_INIT_FILE]
+opensearch_machine.bash [MACHINE_NAME] [CLOUD_INIT_FILE]
 
 # DESCRIPTION
 
@@ -18,7 +18,7 @@ Create and launch a Multipass managed virtual machine.
 
 # MACHINE_NAME
 
-By default opensearch-machine.bash creates a virtual machine named
+By default opensearch_machine.bash creates a virtual machine named
 "opensearch-machine", you can provide a different name.
 
 # CLOUD_INIT_FILE
@@ -34,11 +34,11 @@ help, -h, --help
 
 # EXAMPLES
 
-Creating the OpenSearch Machine using Cloud Init and Multipass
+Creating the Opensearch Machine using Cloud Init and Multipass
 from this repository.
 
 ~~~sh
-./opensearch-machine.bash
+./opensearch_machine.bash
 ~~~
 
 This will take a while once completed you will have a Multipass

@@ -2,29 +2,29 @@
 cff-version: 1.2.0
 message: "If you use this software, please cite it as below."
 type: software
-title: "OpenSearch Machine"
+title: "Opensearch Machine"
 abstract: "A Multipass virtual machine setup for learning and exploring
 OpenSearch"
 authors:
   - family-names: Doiel
-    given-names: Robert
+    given-names: R. S.
     orcid: "https://orcid.org/0000-0003-0900-6903"
 
 repository-code: "https://github.com/caltechlibrary/opensearch-machine"
-version: 0.0.0
+version: 0.0.1
 license-url: "https://github.com/caltechlibrary/opensearch-machine/blob/main/LICENSE"
-keywords: [ "opensearch", "search engine", "virtual machine" ]
-date-released: 2024-03-08
+keywords: [ "OpenSearch", "search engine", "virtual machine" ]
+
 ---
 
 About this software
 ===================
 
-## OpenSearch Machine 0.0.0
+## Opensearch Machine 0.0.1
 
 ### Authors
 
-- Robert Doiel
+- R. S. Doiel
 
 
 
@@ -45,3 +45,4 @@ A Multipass virtual machine setup for learning and exploring OpenSearch
 - Bash &gt;= 3.2
 - Python &gt;= 3
 - Multipass &gt;= 1.13
+- jq &gt;= 1.7

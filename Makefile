@@ -1,7 +1,7 @@
 #
 # Simple Makefile for Multipass based Projects.
 #
-PROJECT = opensearch-machine
+PROJECT = opensearch_machine
 
 GIT_GROUP = caltechlibrary
 
@@ -9,7 +9,7 @@ RELEASE_DATE=$(shell date +'%Y-%m-%d')
 
 RELEASE_HASH=$(shell git log --pretty=format:'%h' -n 1)
 
-PROGRAMS = opensearch-machine.bash
+PROGRAMS = opensearch_machine.bash
 
 MAN_PAGES = $(shell ls -1 *.1.md | sed -E 's/\.1.md/.1/g')
 
@@ -35,7 +35,7 @@ endif
 
 DIST_FOLDERS = bin/*
 
-build: CITATION.cff about.md opensearch-machine.1.md man website
+build: CITATION.cff about.md opensearch_machine.1.md man website
 
 man: $(MAN_PAGES)
 
@@ -52,9 +52,9 @@ about.md: .FORCE
 	@echo "" | pandoc --metadata-file=_codemeta.json --template codemeta-about.tmpl >about.md 2>/dev/null;
 	@if [ -f _codemeta.json ]; then rm _codemeta.json; fi
 
-opensearch-machine.1.md: opensearch-machine.bash
-	bash opensearch-machine.bash help >opensearch-machine.1.md
-	git add opensearch-machine.1.md
+opensearch_machine.1.md: opensearch_machine.bash
+	bash opensearch_machine.bash help >opensearch_machine.1.md
+	git add opensearch_machine.1.md
 
 presentations: .FORCE
 	- make -f presentation.mak
