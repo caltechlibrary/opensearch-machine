@@ -23,10 +23,10 @@
 </nav>
 
 <section>
-<h1 id="part-i-opensearch-machine">Part I: OpenSearch Machine</h1>
-<h2
-id="exploring-opensearch-using-a-multipass-managed-virtual-machine">Exploring
-OpenSearch using a Multipass managed virtual machine</h2>
+<h1 id="part-i-opensearch-machine-vm">Part I: OpenSearch Machine
+(VM)</h1>
+<p>Exploring OpenSearch v2.5.0 using a Multipass managed virtual
+machine</p>
 <h1 id="knowledge-requirements">Knowledge requirements</h1>
 <ul>
 <li>You need to comfortable with working on the command line</li>
@@ -82,6 +82,7 @@ setting things up</li>
 <blockquote>
 <p>Now we’re ready to start working with OpenSearch</p>
 </blockquote>
+<hr />
 <h1 id="part-ii-working-with-opensearch">Part II: Working with
 OpenSearch</h1>
 <p>We’ll be using …</p>
@@ -96,7 +97,7 @@ OpenSearch us up and running healthy</h1>
 <pre class="shell"><code>sudo systemctl status opensearch.service</code></pre>
 <h1 id="exploring-opensearch">Exploring OpenSearch</h1>
 <p>Check to see how OpenSearch is currently configured. By default
-OpenSearch runs on https (self signed certs) and requires “admin”
+OpenSearch runs on HTTPS (self signed certs) and requires “admin”
 account to access.</p>
 <pre class="shell"><code>curl -k --user admin:admin \
   https://localhost:9200/_settings?pretty</code></pre>
@@ -130,7 +131,7 @@ index</h1>
 document</h1>
 <div class="sourceCode" id="cb6"><pre
 class="sourceCode json"><code class="sourceCode json"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;_index&quot;</span><span class="fu">:</span> <span class="st">&quot;content-list&quot;</span><span class="fu">,</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;_index&quot;</span><span class="fu">:</span> <span class="st">&quot;contact-list&quot;</span><span class="fu">,</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;_id&quot;</span><span class="fu">:</span> <span class="st">&quot;0000-0003-0900-6903&quot;</span><span class="fu">,</span></span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;_version&quot;</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;result&quot;</span><span class="fu">:</span> <span class="st">&quot;created&quot;</span><span class="fu">,</span></span>
@@ -351,40 +352,27 @@ elasticdump</h1>
 </ul></li>
 <li>Backup and restore with <code>elasticdump</code></li>
 </ul>
-<p>Can we do better???</p>
-<h1 id="part-iii-improving-our-indexes">Part: III, improving our
-indexes</h1>
+<hr />
+<h1 id="part-iii-where-to-go-from-here">Part: III: Where to go from
+here?</h1>
+<p>OpenSearch provides additional features</p>
 <ul>
 <li>Index mapping</li>
 <li>Aggregations</li>
 </ul>
-<h1 id="creating-our-first-index-map">Creating our first index map</h1>
-<h1 id="retrieving-our-indexs-mapping">Retrieving our index’s
-mapping</h1>
-<ul>
-<li>GET, ’{INDEX_NAME}/_mapping’</li>
-</ul>
-<pre><code>curl https://localhost:9200/{INDEX_NAME}/_mapping?pretty=true</code></pre>
-<h1 id="basic-management-activities">Basic management activities</h1>
-<ul>
-<li>Creating mapping for new indexes</li>
-<li>Index documents</li>
-<li>Managing aliases of indexes</li>
-<li>Manage indexes (e.g. roll ups of time series indexes)</li>
-<li>Providing search service</li>
-</ul>
-<h1 id="managing-opensearch">Managing OpenSearch</h1>
+<p>These are used heavily in Invenio RDM</p>
+<h1 id="managing-opensearch-options">Managing OpenSearch Options</h1>
 <ul>
 <li>JSON REST API running on port 9200</li>
-<li>A “dashboard” web service</li>
+<li>OpenSearch Dashboard</li>
 <li>3rd party tooling
 <ul>
 <li>elasticdump (NodeJS/NPM)</li>
 <li>curator (Python)</li>
-<li>curl, Httpie</li>
+<li>curl</li>
 </ul></li>
 </ul>
-<h1 id="some-json-api-end-points">Some JSON API end points</h1>
+<h1 id="interesting-api-end-points">Interesting API end points</h1>
 <ul>
 <li><code>_settings</code></li>
 <li><code>_aliases</code></li>
@@ -393,119 +381,8 @@ mapping</h1>
 <li><code>_source</code></li>
 <li><code>_doc</code></li>
 </ul>
-<h1 id="what-is-an-index">What is an index?</h1>
-<ul>
-<li>A searchable data structure for full text structured documents</li>
-<li>A collection “documents” expressed as JSON</li>
-</ul>
-<h1 id="what-does-my-opensearch-engine-manage">What does my OpenSearch
-engine manage?</h1>
-<ul>
-<li>Retrieve the <code>_settings</code> JSON document with get</li>
-</ul>
-<pre class="shell"><code>curl https://localhost:9200/_settings</code></pre>
-<h1 id="creating-a-new-index">Creating a new index</h1>
-<p><a
-href="https://opensearch.org/docs/latest/api-reference/index-apis/create-index/"
-class="uri">https://opensearch.org/docs/latest/api-reference/index-apis/create-index/</a></p>
-<ul>
-<li>PUT <code>&lt;index-name&gt;</code></li>
-</ul>
-<h1 id="creating-a-new-index-map">Creating a new index map</h1>
-<ul>
-<li>POST of JSON document of mapping into REST API</li>
-</ul>
-<h1 id="populating-our-index">Populating our index</h1>
-<ul>
-<li>POST to …</li>
-</ul>
-<h1 id="testing-our-index">Testing our index</h1>
-<ul>
-<li>GET <code>_search</code></li>
-</ul>
-<h1 id="retrieving-our-current-index-map">Retrieving our current index
-map</h1>
-<ul>
-<li>GET <code>_index_mapping</code></li>
-</ul>
-<h1 id="retrieving-the-contents-of-an-index">Retrieving the contents of
-an index</h1>
-<ul>
-<li>GET <code>_search</code></li>
-<li>Search for everything</li>
-<li>Loop through all results</li>
-</ul>
-<h1 id="backups-for-rdm">Backups for RDM</h1>
-<ul>
-<li>TBD</li>
-</ul>
-<h1 id="what-is-index-aliasing">What is index aliasing?</h1>
-<ul>
-<li>TBD</li>
-</ul>
-<h1 id="creating-index-aliases">Creating index aliases</h1>
-<ul>
-<li>TBD</li>
-</ul>
-<h1 id="backing-up-indexes">Backing up indexes</h1>
-<ul>
-<li>TBD</li>
-</ul>
-<h1 id="part-iii-postscript">Part III: Postscript</h1>
-<h2 id="what-is-opensearch">What is OpenSearch?</h2>
-<ul>
-<li>A fork of Elasticsearch</li>
-<li>A full text search engine based on Apache Lucene (like Solr)</li>
-<li>Elasticsearch was a response to the stagnation of Solr some years
-back
-<ul>
-<li>Elasticsearch embraced a JSON REST API over XML of the venerable
-Solr of the time</li>
-</ul></li>
-</ul>
-<h1 id="opensearch-vs.-elasticsearch-vs.-solr">OpenSearch
-vs. Elasticsearch vs. Solr?</h1>
-<ul>
-<li>They’re all based on All Based on Lucene</li>
-<li>They share many concepts in common (e.g. indexes, REST API, support
-of JSON/XML)</li>
-<li>General knowledge is transferable between them</li>
-<li>Specifics very</li>
-</ul>
-<h1 id="opensearch-vs-elasticsearch-vs.-solr.">OpenSearch vs
-Elasticsearch vs. Solr.</h1>
-<ul>
-<li>Solr is best documented</li>
-<li>Invenio RDM started out with Elasticsearch</li>
-<li>Invenio RDM now uses OpenSearch</li>
-</ul>
-<h1 id="opensearch-vs-elasticsearch">OpenSearch vs Elasticsearch</h1>
-<ul>
-<li>Documentation for Elasticsearch largely applies to OpenSearch</li>
-<li>Tooling right now is common between the two (e.g. elasticdump)</li>
-<li>OpenSearch documentation looks shiny but isn’t that helpful</li>
-<li>RDM’s documentation of OpenSearch is a better place to start</li>
-</ul>
-<h1 id="opensearch">OpenSearch</h1>
-<ul>
-<li>OpenSearch is Amazon’s fork of Elasticsearch</li>
-<li>Amazon wants all the support income and is cutting out Elasticsearch
-Co.</li>
-<li>When Elasticsearch was created Solr had stagnated and was XML
-only</li>
-<li>Solr/Elasticsearch/OpenSearch are functionally equivalent but their
-API are different</li>
-</ul>
-<h1 id="opensearch-1">OpenSearch</h1>
-<ul>
-<li>Today, February 2024, OpenSearch and Elasticsearch are compatible in
-terms of API and tooling</li>
-<li>Who knows what tomorrow may bring?
-<ul>
-<li>At some point Amazon will embrace and extend</li>
-</ul></li>
-</ul>
-<h1 id="in-conclusion">In conclusion</h1>
+<hr />
+<h1 id="concluding">Concluding</h1>
 <ul>
 <li>Thank you!</li>
 </ul>

@@ -26,12 +26,12 @@
 <h1 id="opensearch-machine">OpenSearch Machine</h1>
 <p>This repository contains instructions for setting up a <a
 href="https://multipass.run">Multipass</a> managed virtual machine for
-learning and experimentation OpenSearch. Multipass runs on macOS,
-Windows and Linux. It provides an Ubuntu Linux machine. OpenSearch while
-written in Java is tailored to run under a Linux environment. OpenSearch
-is a full text search engine based on a forked implementation of
-Elasticsearch full text search engine. OpenSearch is the search engine
-used in Invenio-RDM.</p>
+learning and experimentation with OpenSearch v2.5.0. Multipass runs on
+macOS, Windows and Linux. It provides an Ubuntu Linux machine.
+OpenSearch while written in Java is tailored to run under a Linux
+environment. OpenSearch is a full text search engine based on a forked
+implementation of Elasticsearch full text search engine by Amazon.
+OpenSearch is the search engine used in Invenio-RDM.</p>
 <p><a
 href="https://github.com/caltechlibrary/opensearch-machine/blob/main/LICENSE"><img
 src="https://img.shields.io/badge/License-BSD--like-lightgrey"
@@ -54,11 +54,13 @@ limitations</a></li>
 </ul>
 <h2 id="introduction">Introduction</h2>
 <p>This repository is focused on creating a Multipass virtual machine
-for learning and exploring OpenSearch. It includes brief instructions
-for installation of OpenSearch and OpenSearch Dashboard running under a
-Multipass managed virtual machine. It includes documentation describing
-how to create a indexes, index aliases and backing up those indexes
-outside the virtual machine.</p>
+for learning and exploring OpenSearch v2.5.0<a href="#fn1"
+class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. It
+includes brief instructions for installation of OpenSearch and
+elasticdump running under a Multipass managed virtual machine. It
+includes documentation describing how to create an index, add and remove
+documents as well as backing up and restoring the index in the virtual
+machine.</p>
 <h2 id="quick-start">Quick start</h2>
 <p>Use the <a href="opensearch-init.yaml">opensearch-init.yaml</a> file
 to create a Multipass managed virtual machine. Then run the numbered
@@ -74,7 +76,8 @@ machine</h3>
 <p>While in the shell of your virtual machine (you are the “ubuntu”
 user) run the following scripts.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">01-setup-scripts.bash</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">07-add-opensearch.bash</span></span></code></pre></div>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">07-add-opensearch.bash</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> reboot</span></code></pre></div>
 <p>At this point you should have OpenSearch and OpenSearch Dashboard
 running in your virtual machine, ready to explore.</p>
 <h2 id="stopping-and-removing-your-virtual-machine">Stopping and
@@ -85,14 +88,16 @@ removing your virtual machine</h2>
 <h2 id="usage">Usage</h2>
 <p>Once you have your virtual machine up and running with OpenSearch and
 the OpenSearch dashboard you should be able to access it from your host
-machine using SSH port mapping to interact with the OpenSearch REST API
-and the OpenSearch dashboard.</p>
+machine using SSH port mapping to interact with the OpenSearch REST
+API.</p>
 <p>You can find out more about using Multipass to manage virtual
 machines at <a href="https://multipass.run"
 class="uri">https://multipass.run</a>. You can find out more about
 OpenSearch and OpenSearch Dashboard at <a
 href="https://opensearch.org/docs/latest/about/"
 class="uri">https://opensearch.org/docs/latest/about/</a></p>
+<p>A <a href="presentation.html">presentation</a> is included describing
+the basics of OpenSearch.</p>
 <h2 id="known-issues-and-limitations">Known issues and limitations</h2>
 <p>These instructions focus on running OpenSearch for the purpose of
 learning and experimentation. It does not cover setup and configuration
@@ -121,6 +126,16 @@ Library.</p>
 <img width="100" height="100" alt="Caltech logo" src="https://raw.githubusercontent.com/caltechlibrary/template/main/.graphics/caltech-round.png">
 </a></p>
 </div>
+<section id="footnotes" class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>v2.5.0 was chosen as it is the closest version to that
+used in Invenio-RDM v11 that I could get to install and work under
+Ubuntu 22.04 LTS.<a href="#fnref1" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
 </section>
 
 <footer>
