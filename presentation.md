@@ -10,18 +10,18 @@ linkstyle: bold
 aspectratio: 169
 createDate: 2024-03-08
 updateDate: 2024-03-08
-#pubDate: TBD
-#place: TBD
-#date: TBF
+pubDate: 2024-03-13
+place: DLD Dev Group Meeting
+date: 2024-03-13
 section-titles: false
 toc: true
 keywords: [ "search engine", "OpenSearch" ]
 url: "https://caltechlibrary.github.io/opensearch_machine/blob/main/presentation.md"
 ---
 
-# Part I: OpenSearch Machine
+# Part I: OpenSearch Machine (VM)
 
-## Exploring OpenSearch using a Multipass managed virtual machine
+Exploring OpenSearch v2.5.0 using a Multipass managed virtual machine
 
 # Knowledge requirements
 
@@ -66,6 +66,8 @@ url: "https://caltechlibrary.github.io/opensearch_machine/blob/main/presentation
 
 > Now we're ready to start working with OpenSearch
 
+------------------
+
 # Part II: Working with OpenSearch
 
 We'll be using ...
@@ -83,7 +85,7 @@ sudo systemctl status opensearch.service
 # Exploring OpenSearch
 
 Check to see how OpenSearch is currently configured.
-By default OpenSearch runs on https (self signed certs)
+By default OpenSearch runs on HTTPS (self signed certs)
 and requires "admin" account to access.
 
 ~~~shell
@@ -110,7 +112,6 @@ os_client.bash
 
 If you do not include any options it will display a help page.
 
-
 # Creating our first index
 
 - PUT, "{INDEX_NAME}"
@@ -135,7 +136,7 @@ curl -k --user admin:admin \
 
 ~~~json
 {
-  "_index": "content-list",
+  "_index": "contact-list",
   "_id": "0000-0003-0900-6903",
   "_version": 1,
   "result": "created",
@@ -409,41 +410,27 @@ env NODE_TLS_REJECT_UNAUTHORIZED=0 elasticdump \
   - create, read, update, delete, list, restore
 - Backup and restore with `elasticdump`
 
-Can we do better???
+------------------
 
-# Part: III, improving our indexes
+# Part: III: Where to go from here?
+
+OpenSearch provides additional features
 
 - Index mapping
 - Aggregations
 
-# Creating our first index map
+These are used heavily in Invenio RDM
 
-# Retrieving our index's mapping
-
-- GET, '{INDEX_NAME}/_mapping'
-
-~~~
-curl https://localhost:9200/{INDEX_NAME}/_mapping?pretty=true
-~~~
-
-# Basic management activities
-
-- Creating mapping for new indexes
-- Index documents
-- Managing aliases of indexes
-- Manage indexes (e.g. roll ups of time series indexes)
-- Providing search service
-
-# Managing OpenSearch
+# Managing OpenSearch Options
 
 - JSON REST API running on port 9200
-- A "dashboard" web service
+- OpenSearch Dashboard
 - 3rd party tooling
   - elasticdump (NodeJS/NPM)
   - curator (Python)
-  - curl, Httpie
+  - curl
 
-# Some JSON API end points
+# Interesting API end points
 
 - `_settings`
 - `_aliases`
@@ -452,107 +439,9 @@ curl https://localhost:9200/{INDEX_NAME}/_mapping?pretty=true
 - `_source`
 - `_doc`
 
-# What is an index?
+------------------
 
-- A searchable data structure for full text structured documents
-- A collection "documents" expressed as JSON
-
-# What does my OpenSearch engine manage?
-
-- Retrieve the `_settings` JSON document with get
-
-~~~shell
-curl https://localhost:9200/_settings
-~~~
-
-# Creating a new index
-
-<https://opensearch.org/docs/latest/api-reference/index-apis/create-index/>
-
-- PUT `<index-name>`
-
-
-# Creating a new index map
-
-- POST of JSON document of mapping into REST API
-
-# Populating our index
-
-- POST to ...
-
-# Testing our index
-
-- GET `_search`
-
-# Retrieving our current index map
-
-- GET `_index_mapping`
-
-# Retrieving the contents of an index
-
-- GET `_search`
-- Search for everything
-- Loop through all results
-
-# Backups for RDM
-
-- TBD
-
-# What is index aliasing?
-
-- TBD
-
-# Creating index aliases
-
-- TBD
-
-# Backing up indexes
-
-- TBD
-
-# Part III: Postscript
-
-## What is OpenSearch?
-
-- A fork of Elasticsearch
-- A full text search engine based on Apache Lucene (like Solr)
-- Elasticsearch was a response to the stagnation of Solr some years back
-  - Elasticsearch embraced a JSON REST API over XML of the venerable Solr of the time
-
-# OpenSearch vs. Elasticsearch vs. Solr?
-
-- They're all based on All Based on Lucene
-- They share many concepts in common (e.g. indexes, REST API, support of JSON/XML)
-- General knowledge is transferable between them
-- Specifics very
-
-# OpenSearch vs Elasticsearch vs. Solr.
-
-- Solr is best documented
-- Invenio RDM started out with Elasticsearch
-- Invenio RDM now uses OpenSearch
-
-# OpenSearch vs Elasticsearch
-
-- Documentation for Elasticsearch largely applies to OpenSearch
-- Tooling right now is common between the two (e.g. elasticdump)
-- OpenSearch documentation looks shiny but isn't that helpful
-- RDM's documentation of OpenSearch is a better place to start
-
-# OpenSearch
-
-- OpenSearch is Amazon's fork of Elasticsearch
-- Amazon wants all the support income and is cutting out Elasticsearch Co.
-- When Elasticsearch was created Solr had stagnated and was XML only
-- Solr/Elasticsearch/OpenSearch are functionally equivalent but their API are different
-
-# OpenSearch
-
-- Today, February 2024, OpenSearch and Elasticsearch are compatible in terms of API and tooling
-- Who knows what tomorrow may bring?
-  - At some point Amazon will embrace and extend
-  
-# In conclusion
+# Concluding
 
 - Thank you!
 
